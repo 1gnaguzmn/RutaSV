@@ -1,0 +1,10 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    { "type": "Feature", "properties": { "id": "demo-a-1", "name": "Parada ficticia A1", "source": "RutaSV · punto sintético, no es una parada real", "verification_status": "demonstration", "verified_at": null }, "geometry": { "type": "Point", "coordinates": [-89.217, 13.708] } },
+    { "type": "Feature", "properties": { "id": "demo-shared", "name": "Parada ficticia compartida", "source": "RutaSV · punto sintético, no es una parada real", "verification_status": "demonstration", "verified_at": null }, "geometry": { "type": "Point", "coordinates": [-89.199, 13.700] } },
+    { "type": "Feature", "properties": { "id": "demo-a-3", "name": "Parada ficticia A3", "source": "RutaSV · punto sintético, no es una parada real", "verification_status": "demonstration", "verified_at": null }, "geometry": { "type": "Point", "coordinates": [-89.179, 13.702] } },
+    { "type": "Feature", "properties": { "id": "demo-b-1", "name": "Parada ficticia B1", "source": "RutaSV · punto sintético, no es una parada real", "verification_status": "demonstration", "verified_at": null }, "geometry": { "type": "Point", "coordinates": [-89.206, 13.721] } },
+    { "type": "Feature", "properties": { "id": "demo-b-3", "name": "Parada ficticia B3", "source": "RutaSV · punto sintético, no es una parada real", "verification_status": "demonstration", "verified_at": null }, "geometry": { "type": "Point", "coordinates": [-89.182, 13.687] } }
+  ]
+}

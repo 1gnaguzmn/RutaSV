@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+# Capturas locales; la licencia de redistribución todavía no está especificada.
+raw/
+processed/
+reviews/

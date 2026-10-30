@@ -1,0 +1,33 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "demo-a-ida", "route_id": "demo-a", "short_name": "Demo A",
+        "long_name": "Circuito del sol · recorrido ficticio", "direction": "Ida de demostración",
+        "color_key": "a", "stop_ids": ["demo-a-1", "demo-shared", "demo-a-3"],
+        "source": "RutaSV · geometría sintética para probar la interfaz; no representa un servicio de bus",
+        "verification_status": "demonstration", "verified_at": null
+      },
+      "geometry": { "type": "LineString", "coordinates": [
+        [-89.217, 13.708], [-89.211, 13.707], [-89.205, 13.704],
+        [-89.199, 13.700], [-89.192, 13.699], [-89.184, 13.699], [-89.179, 13.702]
+      ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "demo-b-ida", "route_id": "demo-b", "short_name": "Demo B",
+        "long_name": "Conexión del bosque · recorrido ficticio", "direction": "Ida de demostración",
+        "color_key": "b", "stop_ids": ["demo-b-1", "demo-shared", "demo-b-3"],
+        "source": "RutaSV · geometría sintética para probar la interfaz; no representa un servicio de bus",
+        "verification_status": "demonstration", "verified_at": null
+      },
+      "geometry": { "type": "LineString", "coordinates": [
+        [-89.206, 13.721], [-89.202, 13.715], [-89.201, 13.708],
+        [-89.199, 13.700], [-89.195, 13.694], [-89.189, 13.689], [-89.182, 13.687]
+      ] }
+    }
+  ]
+}

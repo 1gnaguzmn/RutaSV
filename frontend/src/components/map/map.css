@@ -1,0 +1,31 @@
+.map-canvas { position: absolute; inset: 0; background: var(--color-map-background); }
+.map-controls {
+  position: absolute;
+  z-index: 2;
+  right: max(var(--space-4), env(safe-area-inset-right, 0px));
+  bottom: calc(var(--map-bottom, 104px) + 80px);
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-floating);
+}
+.map-controls .icon-button { border-radius: var(--radius-md); }
+.map-controls .icon-button + .icon-button { border-left: 1px solid var(--color-border); }
+.map-messages { position: absolute; top: var(--map-top, 150px); left: var(--space-4); right: var(--space-4); max-height: max(44px, calc(100% - var(--map-top, 150px) - var(--map-bottom, 104px) - 100px)); overflow-y: auto; z-index: 3; pointer-events: none; }
+.map-status { margin: 0 0 var(--space-2); padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-surface); box-shadow: var(--shadow-floating); font-size: .875rem; pointer-events: auto; }
+.map-status p { margin: 0; }
+.map-status button { margin-top: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-2); }
+.map-status button + button { margin-left: var(--space-2); }
+.map-error { color: var(--color-error); background: var(--color-error-soft); }
+.map-region .maplibregl-ctrl-bottom-left { bottom: var(--map-bottom, 104px); left: var(--space-2); max-width: calc(100% - 32px); }
+.map-region .maplibregl-ctrl-attrib { font-size: 12px; border-radius: var(--radius-sm); background: var(--color-surface); }
+.map-region .maplibregl-ctrl-attrib-button { width: 44px; height: 44px; background-repeat: no-repeat; background-position: center; background-size: 24px; }
+.map-region .maplibregl-ctrl-attrib.maplibregl-compact { min-width: 44px; min-height: 44px; padding: 0 8px 0 44px; box-sizing: border-box; }
+.map-region .maplibregl-ctrl-attrib-inner { padding: var(--space-1); }
+.user-location { width: 18px; height: 18px; border: 3px solid var(--color-surface); border-radius: 50%; background: var(--color-primary); box-shadow: var(--shadow-floating); }
+@media (max-height: 480px) and (min-width: 600px) and (max-width: 1023px) {
+  .map-controls { top: max(var(--space-2), env(safe-area-inset-top, 0px)); bottom: auto; }
+  .map-region .maplibregl-ctrl-bottom-left { top: 64px; bottom: auto; left: auto; right: var(--space-4); max-width: 178px; }
+  .map-region .maplibregl-ctrl-attrib { max-height: 80px; overflow-y: auto; }
+}

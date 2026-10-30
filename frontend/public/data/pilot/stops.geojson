@@ -1,0 +1,1245 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          -89.1891477,
+          13.6624844
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.59,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:405",
+        "name": "CALLE ALFONSO ALBALLERO FRENTE A TERMINAL DEL SUR",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.662493698265159, -89.18923581784898",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 949,
+          "Latitud": 13.6624936982651,
+          "Longitud": -89.1892358178489,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 405,
+          "Parada_PGO": "CALLE ALFONSO ALBALLERO FRENTE A TERMINAL DEL SUR",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 405,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.1887985,
+          13.6629521
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.59,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:418",
+        "name": "CALLE CENTRAL DE COLONIA JARDINES CONTIGUO A TERMINAL DEL SUR",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.66296132126552, -89.18888662758066",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 925,
+          "Latitud": 13.6629613212655,
+          "Longitud": -89.1888866275806,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 418,
+          "Parada_PGO": "CALLE CENTRAL DE COLONIA JARDINES CONTIGUO A TERMINAL DEL SUR",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 418,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.18894,
+          13.6645307
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.59,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:467",
+        "name": "CALLE CENTRAL DE COLONIA JARDINES ENTRE CALLE 2 Y CALLE 3 DE COLONIA JARDINES",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.664539986682282, -89.18902812355259",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 950,
+          "Latitud": 13.6645399866822,
+          "Longitud": -89.1890281235525,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 467,
+          "Parada_PGO": "CALLE CENTRAL DE COLONIA JARDINES ENTRE CALLE 2 Y CALLE 3 DE COLONIA JARDINES",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 467,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.189056,
+          13.664568
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.59,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:472",
+        "name": "CALLE CENTRAL DE COLONIA JARDINES ENTRE CALLE 2 Y CALLE 3 DE COLONIA JARDINES",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.664577226631629, -89.18914411963696",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 924,
+          "Latitud": 13.6645772266316,
+          "Longitud": -89.1891441196369,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 472,
+          "Parada_PGO": "CALLE CENTRAL DE COLONIA JARDINES ENTRE CALLE 2 Y CALLE 3 DE COLONIA JARDINES",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 472,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.1891579,
+          13.666064
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.59,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:492",
+        "name": "CALLE CENTRAL ENTRE PASAJE 6 Y PASAJE 7",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.66607323235884, -89.18924604357125",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 923,
+          "Latitud": 13.6660732323588,
+          "Longitud": -89.1892460435712,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 492,
+          "Parada_PGO": "CALLE CENTRAL ENTRE PASAJE 6 Y PASAJE 7",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 492,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.1890386,
+          13.6660712
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.59,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:493",
+        "name": "CALLE CENTRAL DE COLONIA JARDINES ENTRE PASAJE 6 Y PASAJE 7",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.666080436217513, -89.18912670392233",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 951,
+          "Latitud": 13.6660804362175,
+          "Longitud": -89.1891267039223,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 493,
+          "Parada_PGO": "CALLE CENTRAL DE COLONIA JARDINES ENTRE PASAJE 6 Y PASAJE 7",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 493,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.190603,
+          13.6680592
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.591,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:546",
+        "name": "AUTOPISTA COMALAPA DE SAN SALVADOR A SAN MARCOS CONTIGUO A AVAL CARD",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.668068500497043, -89.19069109651906",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 948,
+          "Latitud": 13.668068500497,
+          "Longitud": -89.190691096519,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 546,
+          "Parada_PGO": "AUTOPISTA COMALAPA DE SAN SALVADOR A SAN MARCOS CONTIGUO A AVAL CARD",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 546,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.1877833,
+          13.6684741
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.589,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:562",
+        "name": "CALLE CENTRAL DE COLONIA JARDINES FRENTE A CRUZ ROJA DE SAN MARCOS META",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.66848340804618, -89.18787143017349",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 952,
+          "Latitud": 13.6684834080461,
+          "Longitud": -89.1878714301734,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 562,
+          "Parada_PGO": "CALLE CENTRAL DE COLONIA JARDINES FRENTE A CRUZ ROJA DE SAN MARCOS META",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 562,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.1878195,
+          13.6686676
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.589,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:567",
+        "name": "CALLE CENTRAL DE COLONIA JARDINES CONTIGUO A CRUZ ROJA DE SAN MARCOS",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.66867688519125, -89.18790762135255",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 922,
+          "Latitud": 13.6686768851912,
+          "Longitud": -89.1879076213525,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 567,
+          "Parada_PGO": "CALLE CENTRAL DE COLONIA JARDINES CONTIGUO A CRUZ ROJA DE SAN MARCOS",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 567,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.1902315,
+          13.6687234
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.591,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:571",
+        "name": "AUTOPISTA COMALAPA DE SAN MARCOS A SAN SALVADOR FRENTE A MONUMENTO CRISTO DE LA PAZ",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.668732725438458, -89.19031960771186",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 926,
+          "Latitud": 13.6687327254384,
+          "Longitud": -89.1903196077118,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 571,
+          "Parada_PGO": "AUTOPISTA COMALAPA DE SAN MARCOS A SAN SALVADOR FRENTE A MONUMENTO CRISTO DE LA PAZ",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 571,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.1914422,
+          13.6722084
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.592,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:719",
+        "name": "AUTOPISTA COMALAPA DE SAN SALVADOR A SAN MARCOS CONTIGUO ENTRADA PRINCIPAL COLONIA CALIFORNIA I",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.672217688831662, -89.19153027820582",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 947,
+          "Latitud": 13.6722176888316,
+          "Longitud": -89.1915302782058,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 719,
+          "Parada_PGO": "AUTOPISTA COMALAPA DE SAN SALVADOR A SAN MARCOS CONTIGUO ENTRADA PRINCIPAL COLONIA CALIFORNIA I",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 719,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2032309,
+          13.6742606
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.599,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:820",
+        "name": "AUTOPISTA COMALAPA DE SAN SALVADOR A SAN MARCOS CONTIGUO ENTRADA CEMENTERIO JARDINES DEL RECUERDO",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.674269919623315, -89.20331908955949",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 945,
+          "Latitud": 13.6742699196233,
+          "Longitud": -89.2033190895594,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 820,
+          "Parada_PGO": "AUTOPISTA COMALAPA DE SAN SALVADOR A SAN MARCOS CONTIGUO ENTRADA CEMENTERIO JARDINES DEL RECUERDO",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 820,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2032933,
+          13.6745484
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.599,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:844",
+        "name": "BOULEVARD FEDERICO PROAÑO ENTRE BOULEVARD LOS PROCERES Y ENTRADA 3 DE COLONIA LOS ELISEOS",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.674557698648165, -89.20338146660407",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 928,
+          "Latitud": 13.6745576986481,
+          "Longitud": -89.203381466604,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 844,
+          "Parada_PGO": "BOULEVARD FEDERICO PROAÑO ENTRE BOULEVARD LOS PROCERES Y ENTRADA 3 DE COLONIA LOS ELISEOS",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 844,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.1957047,
+          13.6747558
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.594,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:862",
+        "name": "AUTOPISTA COMALAPA DE SAN SALVADOR A SAN MARCOS CONTIGUO A CALLE DE PLANES DE RENDEROS",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.674765093834978, -89.19579281133514",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 946,
+          "Latitud": 13.6747650938349,
+          "Longitud": -89.1957928113351,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 862,
+          "Parada_PGO": "AUTOPISTA COMALAPA DE SAN SALVADOR A SAN MARCOS CONTIGUO A CALLE DE PLANES DE RENDEROS",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 862,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.1951842,
+          13.6754659
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.594,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:917",
+        "name": "AUTOPISTA COMALAPA DE SAN MARCOS A SAN SALVADOR FRENTE A BLOK A DE COMUNIDAD MODELO III",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.675475198269632, -89.19527229623881",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 927,
+          "Latitud": 13.6754751982696,
+          "Longitud": -89.1952722962388,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 917,
+          "Parada_PGO": "AUTOPISTA COMALAPA DE SAN MARCOS A SAN SALVADOR FRENTE A BLOK A DE COMUNIDAD MODELO III",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 917,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2215567,
+          13.6835481
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.61,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:1552",
+        "name": "CALLE AL ESTADIO ENTRE CALLE LOS VIVEROS Y BOULEVARD LOS PROCERES",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.683557415709789, -89.22164502502011",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 929,
+          "Latitud": 13.6835574157097,
+          "Longitud": -89.2216450250201,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 1552,
+          "Parada_PGO": "CALLE AL ESTADIO ENTRE CALLE LOS VIVEROS Y BOULEVARD LOS PROCERES",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 1552,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2215567,
+          13.6835481
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.61,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:1553",
+        "name": "CALLE AL ESTADIO ENTRE CALLE LOS VIVEROS Y BOULEVARD LOS PROCERES",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.683557415709789, -89.22164502502011",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 943,
+          "Latitud": 13.6835574157097,
+          "Longitud": -89.2216450250201,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 1553,
+          "Parada_PGO": "CALLE AL ESTADIO ENTRE CALLE LOS VIVEROS Y BOULEVARD LOS PROCERES",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 1553,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2191519,
+          13.6839006
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.608,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:1588",
+        "name": "BOULEVARD FEDERICO PROAÑO ENTRE BOULEVARD LOS PROCERES Y ENTRADA 3 DE COLONIA LOS ELISEOS",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.683909917481405, -89.21924014556846",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 942,
+          "Latitud": 13.6839099174814,
+          "Longitud": -89.2192401455684,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 1588,
+          "Parada_PGO": "BOULEVARD FEDERICO PROAÑO ENTRE BOULEVARD LOS PROCERES Y ENTRADA 3 DE COLONIA LOS ELISEOS",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 1588,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2195388,
+          13.6844133
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.609,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:1609",
+        "name": "BOULEVARD DE LOS PROCERES FRENTE ENTRADA PRINCIPAL DE COLONIA LOS ELISEOS",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.684422651809676, -89.21962707775755",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 944,
+          "Latitud": 13.6844226518096,
+          "Longitud": -89.2196270777575,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 1609,
+          "Parada_PGO": "BOULEVARD DE LOS PROCERES FRENTE ENTRADA PRINCIPAL DE COLONIA LOS ELISEOS",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 1609,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2215179,
+          13.6846051
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.61,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:1613",
+        "name": "CALLE ANTIGUA MONSERRAT ENTRE 49 AVENIDA SUR Y AVENIDA LA FLORESTA",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.68461449989563, -89.22160613588083",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 941,
+          "Latitud": 13.6846144998956,
+          "Longitud": -89.2216061358808,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 1613,
+          "Parada_PGO": "CALLE ANTIGUA MONSERRAT ENTRE 49 AVENIDA SUR Y AVENIDA LA FLORESTA",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 1613,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2172956,
+          13.690147
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.608,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2045",
+        "name": "49 AVENIDA SUR CONTIGUO A COMPLEJO RESIDENCIAL BRISAS DE SAN FRANCISCO",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.690156366229237, -89.21738390430426",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 940,
+          "Latitud": 13.6901563662292,
+          "Longitud": -89.2173839043042,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2045,
+          "Parada_PGO": "49 AVENIDA SUR CONTIGUO A COMPLEJO RESIDENCIAL BRISAS DE SAN FRANCISCO",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2045,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2168532,
+          13.6906473
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.607,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2076",
+        "name": "49 AVENIDA SUR CONTIGUO A ENTRADA PRINCIPAL DE COLONIA LUZ",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.690656704478103, -89.21694149197592",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 930,
+          "Latitud": 13.6906567044781,
+          "Longitud": -89.2169414919759,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2076,
+          "Parada_PGO": "49 AVENIDA SUR CONTIGUO A ENTRADA PRINCIPAL DE COLONIA LUZ",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2076,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2153566,
+          13.6921614
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.607,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2163",
+        "name": "PASAJE 1 ENTRE 49 AVENIDA SUR Y CALLE FERROCARRIL",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.692170786379938, -89.21544481942229",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 931,
+          "Latitud": 13.6921707863799,
+          "Longitud": -89.2154448194222,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2163,
+          "Parada_PGO": "PASAJE 1 ENTRE 49 AVENIDA SUR Y CALLE FERROCARRIL",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2163,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2190249,
+          13.6926458
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.609,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2210",
+        "name": "BOULEVARD VENEZUELA FRENTE A TERMINAL DE BUSES DE OCCIDENTE",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.692655184455152, -89.2191131605598",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 939,
+          "Latitud": 13.6926551844551,
+          "Longitud": -89.2191131605598,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2210,
+          "Parada_PGO": "BOULEVARD VENEZUELA FRENTE A TERMINAL DE BUSES DE OCCIDENTE",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2210,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2193093,
+          13.6929897
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.609,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2246",
+        "name": "BOULEVARD VENEZUELA Y TERMINAL DE OCCIDENTE",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.69299915510989, -89.21939759381594",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 932,
+          "Latitud": 13.6929991551098,
+          "Longitud": -89.2193975938159,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2246,
+          "Parada_PGO": "BOULEVARD VENEZUELA Y TERMINAL DE OCCIDENTE",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2246,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2222974,
+          13.6936135
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.611,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2284",
+        "name": "BOULEVARD VENEZUELA E INSTITUTO TECNICO INDUSTRIAL ITI",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.693622864785883, -89.22238567964769",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 933,
+          "Latitud": 13.6936228647858,
+          "Longitud": -89.2223856796476,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2284,
+          "Parada_PGO": "BOULEVARD VENEZUELA E INSTITUTO TECNICO INDUSTRIAL ITI",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2284,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2230407,
+          13.6936727
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.611,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2293",
+        "name": "BOULEVARD VENEZUELA FRENTE A INSTITUTO TECNICO INDUSTRIAL ITI",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.693682138065924, -89.22312897910973",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 938,
+          "Latitud": 13.6936821380659,
+          "Longitud": -89.2231289791097,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2293,
+          "Parada_PGO": "BOULEVARD VENEZUELA FRENTE A INSTITUTO TECNICO INDUSTRIAL ITI",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2293,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2287535,
+          13.694563
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.615,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2378",
+        "name": "ALAMEDA MANUEL ENRIQUE ARAUJO ENTRE AVENIDA LAS CAMELIAS Y CALLE LORENA",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.694572390794116, -89.22884183921752",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 934,
+          "Latitud": 13.6945723907941,
+          "Longitud": -89.2288418392175,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2378,
+          "Parada_PGO": "ALAMEDA MANUEL ENRIQUE ARAUJO ENTRE AVENIDA LAS CAMELIAS Y CALLE LORENA",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2378,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2248072,
+          13.6972448
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.613,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2852",
+        "name": "67 AVENIDA SUR ENTRE PASAJE 2 Y PASAJE CARBONEL",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.697254234086428, -89.22489545905776",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 937,
+          "Latitud": 13.6972542340864,
+          "Longitud": -89.2248954590577,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2852,
+          "Parada_PGO": "67 AVENIDA SUR ENTRE PASAJE 2 Y PASAJE CARBONEL",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2852,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2265023,
+          13.6977816
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.614,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2941",
+        "name": "PASAJE 2 DE COLONIA ROMA ENTRE ALAMEDA MANUEL ENRIQUE ARAUJO Y PASAJE 3",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "I",
+          "Coordenadas": "13.697791054684338, -89.22659061507804",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 935,
+          "Latitud": 13.6977910546843,
+          "Longitud": -89.226590615078,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2941,
+          "Parada_PGO": "PASAJE 2 DE COLONIA ROMA ENTRE ALAMEDA MANUEL ENRIQUE ARAUJO Y PASAJE 3",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "I",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2941,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -89.2265023,
+          13.6977816
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "association_basis": "demo_direction_mapping",
+        "coordinate_discrepancy_m": 9.614,
+        "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:stop:0:2942",
+        "name": "PASAJE 2 DE COLONIA ROMA ENTRE ALAMEDA MANUEL ENRIQUE ARAUJO Y PASAJE 3",
+        "shape_id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+        "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer/0 · snapshot 20261029T224448147697Z",
+        "source_attributes": {
+          "Cod": "R",
+          "Coordenadas": "13.697791054684338, -89.22659061507804",
+          "FCODE": "FA003",
+          "FID_L0Coordenadas_Paradas_AMSS_": 936,
+          "Latitud": 13.6977910546843,
+          "Longitud": -89.226590615078,
+          "NA2": "SAN SALVADOR",
+          "NA3": "06",
+          "NAM": "San Salvador",
+          "OBJECTID": 2942,
+          "Parada_PGO": "PASAJE 2 DE COLONIA ROMA ENTRE ALAMEDA MANUEL ENRIQUE ARAUJO Y PASAJE 3",
+          "Ruta": "AB008A0SS"
+        },
+        "source_direction_code": "R",
+        "source_label": "VMT / ArcGIS",
+        "source_objectid": 2942,
+        "source_route_code": "AB008A0SS",
+        "source_snapshot": "20261029T224448147697Z",
+        "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+        "verification_status": "unverified",
+        "verified_at": null
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}
