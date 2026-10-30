@@ -13,7 +13,7 @@
     "routes.geojson": "a96e2326c28752b68297476c2b8b39f446e1128ade98a498955c69ac10d95e21",
     "stops.geojson": "e771711beec04d8975b38520a66e5174f9c9a9309c924b7cf36b3fbbcd5b21c6"
   },
-  "preparation_sha256": "e45dc5461fc6f6bd1e9f1c88466dae09ecb02eaf0064b0c9a9f23e6decc11504",
+  "preparation_sha256": "3575e953c4e804b9a237b10179e8b7b28fda379dfc7149e1d5bda8143d9a276a",
   "routes": [
     {
       "ambiguous_stop_associations": 0,

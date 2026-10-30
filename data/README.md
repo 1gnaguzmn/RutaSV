@@ -28,7 +28,7 @@ Total: **6 rutas, 14 trazados y 207 registros**, sin fusionar puntos coincidente
 .\data\.venv\Scripts\python.exe data/scripts/import_demo_routes.py run
 ```
 
-`prepare` genera `test-rutasv/public/data/transit/routes.geojson`, `stops.geojson` y `catalog.json`. El catálogo guarda por ruta: nombres originales, código, instantánea, edición declarada, identificadores de trazados, tipos geométricos, conteos, ausencia de paradas, asociaciones ambiguas, licencia declarada y hash de procedencia. Incluye hashes de GeoJSON, configuración y preparación. La aplicación usa esos archivos locales; no consulta ArcGIS ni necesita Python para arrancar.
+`prepare` genera `frontend/public/data/transit/routes.geojson`, `stops.geojson` y `catalog.json`. El catálogo guarda por ruta: nombres originales, código, instantánea, edición declarada, identificadores de trazados, tipos geométricos, conteos, ausencia de paradas, asociaciones ambiguas, licencia declarada y hash de procedencia. Incluye hashes de GeoJSON, configuración y preparación. La aplicación usa esos archivos locales; no consulta ArcGIS ni necesita Python para arrancar.
 
 Para añadir otra ruta, agregar `{ "code": "CODIGO_EXACTO", "short_name": "NOMBRE" }` a `demo_routes.json` y ejecutar `run`. Los argumentos `--config`, `--sources`, `--data-root` y `--output` permiten preparar otro catálogo. Si el servicio cambia sentidos, geometrías o deja registros rechazados, el comando falla antes de reemplazar la copia pública para permitir revisar el caso. Para capturar una actualización de una ruta, usar el importador individual y cambiar explícitamente su referencia en `demo_sources.json`; no se sobrescriben capturas anteriores.
 
@@ -100,7 +100,7 @@ Los originales conservan los bytes de respuesta, atributos, referencia espacial 
 
 Los procesados conservan `source_attributes`, identificadores de origen, instantánea y procedencia. `provenance.json` registra fechas declaradas, versiones de Python/Shapely/pyproj/PROJ, hashes del código/configuración, revisión recibida y archivos de salida. La validación comprueba también el manifiesto y los originales asociados. Es necesario conservarlos para validar posteriormente una salida.
 
-`raw/`, `processed/`, `reviews/` y el entorno están excluidos de Git mediante el `.gitignore` de esta carpeta. Las capturas son locales: no se añaden automáticamente a `test-rutasv/public/data/` ni a ningún despliegue.
+`raw/`, `processed/`, `reviews/` y el entorno están excluidos de Git mediante el `.gitignore` de esta carpeta. Las capturas son locales: no se añaden automáticamente a `frontend/public/data/` ni a ningún despliegue.
 
 ## Geometría, identificadores y calidad
 
@@ -172,7 +172,7 @@ La 8-A utiliza la instantánea `20261029T224448147697Z` como referencia. Su prep
 .\data\.venv\Scripts\python.exe data/scripts/prepare_pilot_demo.py
 ```
 
-Valida los hashes de los originales/procesados y genera exclusivamente `test-rutasv/public/data/pilot/routes.geojson` y `stops.geojson`. Esa copia sí está incluida en el frontend; los originales y procesados siguen intactos y excluidos de Git. No hace consultas de red ni despliega la aplicación.
+Valida los hashes de los originales/procesados y genera exclusivamente `frontend/public/data/pilot/routes.geojson` y `stops.geojson`. Esa copia sí está incluida en el frontend; los originales y procesados siguen intactos y excluidos de Git. No hace consultas de red ni despliega la aplicación.
 
 La interpretación elegida para la demo es `I→Recorrido 01` (14 registros) y `R→Recorrido 02` (17). Se guarda como `shape_id` y `association_basis: "demo_direction_mapping"`, sin llenar `stop_ids`, crear una revisión manual ficticia ni cambiar `unverified` o `verified_at`. El script conserva geometrías, IDs, nombres y todos los puntos, independientemente de su distancia al trazado.
 

@@ -27,12 +27,6 @@ export function getGroupStops(group: RouteGroup, stops: Stop[]): Stop[] {
   return [...new Map(group.variants.flatMap((route) => getRouteStops(route, stops)).map((stop) => [stop.properties.id, stop])).values()]
 }
 
-export function getInitialRoute(routes: Route[]): Route | undefined {
-  const preferred = routes.filter((route) => route.properties.is_initial_route)
-  const candidates = preferred.length ? preferred : routes
-  return candidates.find((route) => route.properties.recorrido_code === '01') ?? candidates[0]
-}
-
 export function routePositions(route: Route): number[][] {
   return route.geometry.type === 'MultiLineString' ? route.geometry.coordinates.flat() : route.geometry.coordinates
 }

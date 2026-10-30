@@ -1,13 +1,13 @@
 # RutaSV · demo frontend v0.1
 
-Prototipo local para explorar **8-A, 30A, 29G, 101A, 44 y 2-C** en San Salvador y el AMSS. React, TypeScript, Vite y MapLibre GL JS; identidad visual definida en `../DESIGN_SYSTEM.md`.
+Prototipo local para explorar **8-A, 30A, 29G, 101A, 44 y 2-C** en San Salvador y el AMSS. React, TypeScript, Vite y MapLibre GL JS; identidad visual definida en `../agents/DESIGN_SYSTEM.md`.
 
 ## Ejecutar
 
 Con Node.js 22.13 o superior y npm:
 
 ```sh
-cd test-rutasv
+cd frontend
 npm install --legacy-peer-deps
 npm run dev
 ```
@@ -25,27 +25,33 @@ El build comprueba TypeScript y genera `dist/`. Los tests usan el runner de Node
 
 ## Uso
 
-- Al cargar se selecciona y encuadra el **Recorrido 01** de la 8-A. El buscador acepta nombres con o sin guiones/espacios y códigos originales, ignorando mayúsculas y acentos: `8-A`, `8A`, `8 A`, `AB008A0SS`, `30A`, `MB030A0`, `2C`, `AB002C0`. Los trazados se agrupan en seis rutas.
+- Al cargar se muestra **Explorar rutas**, sin selección ni recorridos dibujados, centrado en San Salvador `[-89.19, 13.70]` y zoom 12. El buscador acepta nombres con o sin guiones/espacios y códigos originales, ignorando mayúsculas y acentos: `8-A`, `8A`, `8 A`, `AB008A0SS`, `30A`, `MB030A0`, `2C`, `AB002C0`. Los trazados se agrupan en seis tarjetas.
 - En móvil, expandir/contraer el panel con el botón; no hay arrastre. En escritorio, desde 1024 px, el contenido ocupa un panel lateral de 400 px. En pantallas bajas se limita la altura del panel y se recolocan controles para conservar el mapa accesible.
-- El selector de la ficha alterna entre **Recorrido 01 (14 paradas)** y **Recorrido 02 (17 paradas)**. La interpretación para esta demo es `I→01 / R→02`, según los códigos de la fuente.
+- Seleccionar una tarjeta abre su primer recorrido disponible. En la 8-A, el selector alterna entre **Recorrido 01 (14 paradas)** y **Recorrido 02 (17 paradas)**. La interpretación para esta demo es `I→01 / R→02`, según los códigos de la fuente.
 - 30A muestra 34/33 registros y 29G 34/32. 101A y 44 tienen trazados, pero la capa de origen no incluye sus paradas; el panel lo indica. 2-C conserva cuatro trazados (dos 01 y dos 02), identificados por registro de origen. Sus 26/17 paradas se muestran en todos los trazados con código compatible, con una nota sobre la variante no especificada. La tarjeta cuenta 43 registros una sola vez.
-- Seleccionar una tarjeta o un trazado abre su ficha y encuadra el recorrido. Seleccionar una parada abre sus detalles; volver conserva el recorrido anterior. Buscar regresa a explorar. Las paradas también se pueden abrir desde la **lista alfabética sin numeración de viaje**, con la nota “Orden de viaje no definido”.
-- La búsqueda mantiene todas las rutas en el mapa. Una selección resalta el recorrido en verde y muestra sus paradas. Sin selección, las paradas se ven desde zoom 11 para reducir densidad.
+- Seleccionar una tarjeta abre su ficha, dibuja exclusivamente ese trazado en verde y lo encuadra. Se muestran solo sus paradas asociadas, sin agrupación. Seleccionar una parada abre sus detalles; volver conserva el recorrido o grupo anterior. Las paradas de un recorrido siguen en **lista alfabética sin numeración de viaje**, con la nota “Orden de viaje no definido”.
+- Buscar regresa a explorar sin dibujar rutas. **Limpiar selección** también vuelve a explorar y conserva cámara y búsqueda. Sin selección, el control de encuadre vuelve al centro de San Salvador y zoom 12.
 - Los controles permiten acercar, alejar, encuadrar y solicitar una ubicación puntual. No se solicita ubicación al iniciar ni se sigue al dispositivo. La ubicación requiere localhost o HTTPS y permiso del navegador; el marcador corresponde al usuario, nunca a un bus.
 - El encuadre considera la cabecera, los controles, las atribuciones y el panel. Redimensionar el viewport vuelve a encuadrar el trazado seleccionado; plegar el panel conserva la cámara. El panel lateral desplaza su contenido sin aumentar la altura del mapa.
 - “Planificar un viaje” solo informa que estará disponible en otra fase.
 
 ## Identificación visual del mapa
 
-Cada ruta tiene un color estable en el mapa y en su tarjeta: 8-A azul, 30A naranja oscuro, 29G violeta, 101A magenta, 44 cian oscuro y 2-C pizarra. Todos los trazados de una misma ruta comparten ese color. Al seleccionar un recorrido, su línea pasa a verde con contorno blanco; al volver a explorar recupera su color. Los nombres y el panel permiten identificar rutas sin depender solo del color.
+Las tarjetas conservan un color estable por ruta: 8-A azul, 30A naranja oscuro, 29G violeta, 101A magenta, 44 cian oscuro y 2-C pizarra. En el mapa solo aparece el recorrido seleccionado, en verde con contorno blanco. Limpiar oculta su línea y etiqueta; no se dibujan los demás recorridos como contexto. Los nombres y el panel permiten identificar rutas sin depender solo del color.
 
-Desde **zoom 12**, las etiquetas siguen los trazados y muestran el nombre de ruta. El seleccionado añade su código de recorrido, por ejemplo `30A · 01`. Usan texto de 12–14 px, halo blanco y separación de 300 px entre repeticiones. Se reutiliza el font stack regular del estilo Liberty y su endpoint de glyphs, sin otro proveedor de fuentes. Pulsar una etiqueta selecciona ese trazado; las paradas tienen prioridad cuando coinciden sus áreas táctiles.
+Desde **zoom 12**, la etiqueta del trazado seleccionado muestra su nombre y código de recorrido, por ejemplo `30A · 01`. Usa texto de 12–14 px, halo blanco y separación de 300 px entre repeticiones. Se reutiliza el font stack regular del estilo Liberty y su endpoint de glyphs, sin otro proveedor de fuentes. Las paradas tienen prioridad cuando coinciden sus áreas táctiles.
 
-Las paradas conservan puntos pequeños; desde **zoom 15** aparece una señal de parada de 24 px dibujada localmente con Canvas 2D y registrada como imagen de MapLibre a densidad 2. La seleccionada se destaca en verde y aumenta ligeramente de tamaño. Su área de interacción sigue siendo de 44 px. Los puntos permanecen bajo los iconos como respaldo; si falla su generación, se conserva la selección desde mapa y listas.
+Al explorar, las paradas de RutaSV se ocultan por debajo de **zoom 11**. Desde 11 hasta antes de 15 se muestran agrupaciones con contador y puntos individuales. Se usan `clusterRadius: 50`, `clusterMinPoints: 2` y `clusterMaxZoom: 14`. Desde **zoom 15** aparecen iconos individuales de señal de parada de 24 px, dibujados localmente con Canvas 2D y registrados a densidad 2. Los círculos quedan como respaldo; las áreas táctiles son de 44 px.
+
+Pulsar un grupo usa `getClusterExpansionZoom` para acercarse. Si la expansión supera el límite de agrupación, se consultan sus miembros con `getClusterLeaves` y se abre el listado en el panel. Las pulsaciones ambiguas sobre puntos superpuestos abren el mismo listado, con nombre, rutas asociadas, orden alfabético y **50 registros por página**. Abrir una ficha y volver conserva el grupo y su página. Los contadores representan registros de la fuente, sin deduplicar por posición ni afirmar que sean paradas físicas distintas.
+
+Al seleccionar un recorrido, se oculta la exploración agrupada y se muestran solo sus paradas, sin agrupar. Una parada abierta desde explorar conserva las agrupaciones y se destaca individualmente sin dibujar rutas. Las consultas de grupos que fallen permiten reintentar; las respuestas tardías se descartan al cambiar selección, datos o instancia del mapa.
 
 MapLibre evita colisiones entre etiquetas y entre iconos normales, por lo que algunos pueden ocultarse cuando no hay espacio. La parada seleccionada permanece destacada. Los registros coincidentes no se fusionan y las geometrías no se desplazan para separar trazados. Las listas y el selector siguen permitiendo consultar las variantes de 2-C y los registros superpuestos.
 
-`features/routes/routeAppearance.ts` resuelve la presentación por código original; mapa y tarjetas comparten esa configuración y los colores de `styles/tokens.css`. `components/map/layerStyles.ts` construye las expresiones cartográficas y toma las fuentes del estilo. Los archivos GeoJSON, el contrato de datos y el importador no cambian; los fixtures Demo A/B siguen usando `color_key: "a" / "b"`.
+`features/routes/routeAppearance.ts` resuelve los colores de tarjetas mediante los tokens CSS; los fixtures Demo A/B siguen usando `color_key: "a" / "b"`. `components/map/layerStyles.ts` centraliza zoom, agrupación y fuentes. `StopLayer` conserva una fuente agrupada de exploración y otra sin agrupar para el contexto, actualizada con `setData`. Las capas cambian de filtro/visibilidad sin recrear el mapa ni crear marcadores HTML por parada. Los GeoJSON, el contrato de datos y el importador permanecen intactos. Las preferencias históricas de ruta inicial que siguen en los archivos ya no se usan para seleccionar automáticamente.
+
+La política afecta a las capas de RutaSV; los puntos de interés y atribuciones del mapa base Liberty permanecen. La visualización de itinerarios se documenta para una fase posterior: únicamente segmentos elegidos, bus con línea continua verde, caminatas con línea discontinua gris e hitos diferenciados. No se añadió un visualizador ni cálculo de viajes.
 
 ## Datos y atribuciones
 
@@ -73,29 +79,27 @@ El mapa base usa [OpenFreeMap Liberty](https://openfreemap.org/quick_start/), co
 
 - `components/map/`: ciclo de vida del mapa, capas de rutas/paradas y controles. Mapa en carga muestra un indicador; un fallo ofrece reintento y mantiene accesible el panel. Reintentar reconstruye la instancia conservando el centro/zoom y la selección de la aplicación.
 - `components/layout/` y `components/ui/`: cabecera, búsqueda y panel no modal. Panel colapsado/expandido, foco al navegar entre fichas y contenido desplazable. La búsqueda sin coincidencias muestra un mensaje y permite limpiar.
-- `features/routes/` y `features/stops/`: lista, tarjetas, fichas y transiciones de selección. Colecciones vacías muestran “Aún no hay rutas cargadas”. Sin datos válidos no se dibujan capas.
+- `features/routes/` y `features/stops/`: tarjetas, fichas, listado paginado de grupos y transiciones de selección. Colecciones vacías muestran “Aún no hay rutas cargadas”. Sin datos válidos no se dibujan capas.
 - `services/`, `hooks/` y `types/`: carga estática, validación, estado de carga/error/reintento e inicialización de la selección. `features/routes/routeData.ts` centraliza agrupación y asociación de paradas. Las fichas no consultan servicios por separado.
 - `styles/tokens.css`: colores, espaciado, radios y sombras reutilizables. CSS por componente; fuente de sistema, sin descargas de tipografía. Movimiento reducido, controles de 44 px y foco visible.
 
 ## Comprobaciones
 
-`npm test` cubre el catálogo, el piloto y los fixtures ficticios: seis grupos, búsquedas por nombre/código, referencias inválidas entre rutas/sentidos, cantidades, multipartes, ambigüedad de 2-C, orden alfabético, selección inicial y regreso a un recorrido desde sus paradas. Las pruebas Python comprueban la conservación de geometrías, IDs y capturas, preparación reproducible, reutilización sin red y errores sin reemplazo de la copia estática. Para revisar visualmente:
+`npm test` cubre catálogo, piloto y fixtures: búsquedas, referencias, conteos, multipartes, cuatro variantes de 2-C, colores de tarjetas, contexto de paradas, grupos, paginación, regreso entre fichas, reintentos y descarte de respuestas obsoletas. Incluye 10.000 registros sintéticos para comprobar orden y conservación sin deduplicar. Las pruebas Python del importador siguen disponibles; esta actualización no cambia sus scripts ni sus datos.
+
+Para revisar visualmente:
 
 1. Probar anchos de 320, 390, 768, 1024 y 1280 px, orientación horizontal y zoom al 200 %: sin desbordamiento ni superposición entre controles, panel y búsqueda.
-2. Expandir/contraer, alternar recorridos 01/02 y comprobar 14/17 paradas y una lista sin numeración.
-3. Buscar `8-A`, `8A`, `8 A` y `AB008A0SS`: un resultado con dos recorridos y 31 registros. Probar limpiar y un nombre inexistente.
-4. Seleccionar paradas desde mapa/listas, comprobar su recorrido asociado y regresar sin perderlo.
-5. Navegar con Tab/Enter y flechas del selector; verificar el foco y probar reducción de movimiento.
-6. Denegar ubicación, interrumpir la descarga de GeoJSON o del estilo y comprobar mensajes/reintentos.
+2. Comprobar inicio sin ruta seleccionada ni líneas de RutaSV. Revisar zoom 10.9/11/14.9/15/16: ocultación, agrupaciones, puntos e iconos.
+3. Pulsar grupos separables y terminales; abrir registros superpuestos y volver desde una ficha. Probar páginas de 50 registros y conservar página, búsqueda y cámara.
+4. Buscar `8-A`, `8A`, `8 A` y `AB008A0SS`: un resultado con dos recorridos y 31 registros. Seleccionar y alternar 01/02: solo ese trazado y 14/17 paradas, con lista sin numeración. Repetir con los demás trazados, incluidas 101A/44 sin paradas.
+5. Limpiar selección, comprobar que desaparecen todas las líneas y se recuperan las agrupaciones. El botón de encuadre debe volver a San Salvador y zoom 12.
+6. Navegar con Tab/Enter y flechas del selector; comprobar foco, toque, movimiento reducido y recuperación tras fallos de datos/mapa o consulta de grupos.
 
-La implementación se verificó con Edge headless: anchos previstos, panel colapsado/expandido, orientación horizontal, búsqueda, selección desde mapa y listas, Enter para alternar el panel, foco de las fichas, movimiento reducido, ubicación simulada autorizada/denegada/no disponible y recuperación tras fallos de GeoJSON y del estilo. No se detectaron excepciones de JavaScript. Se emuló una superficie de 640×400 a densidad 2, equivalente al espacio de layout de una pantalla 1280×800 al 200 %; esto no sustituye la revisión del zoom nativo del navegador ni las pruebas táctiles en un dispositivo físico.
+La visualización progresiva se verificó con Edge headless: inicio en zoom 12 sin selección, ausencia de líneas y clics de recorridos ocultos, límites de zoom, expansión/listado de grupos, nombres/rutas asociadas, los 14 trazados y sus conteos, limpieza conservando cámara y búsqueda, encuadre, errores/reintentos de grupo y respuestas tardías tras seleccionar una ruta. Se conservaron la instancia del mapa y las tres fuentes GeoJSON al cambiar de contexto.
 
-Para la integración del piloto se comprobó además en Edge que el filtro real de la capa de paradas contiene 14/17 IDs, que el selector funciona con teclado y conserva el foco, que el trazado permanece dentro del mapa al redimensionar y que no se hacen solicitudes a ArcGIS en ejecución.
+Se comprobaron 320, 390, 768, 1024 y 1280 px, orientación horizontal y una superficie de 640×400; selector con teclado y toque simulado en 390×844. Con 10.000 puntos coincidentes, inyectados solo en memoria durante la prueba, el mapa mostró una agrupación, no creó marcadores HTML y el panel renderizó 50 filas por página; abrir una ficha y volver recuperó la segunda página. No hubo excepciones de JavaScript ni consultas a ArcGIS. La comparación de hashes comprueba que originales, procesados, GeoJSON públicos e importador siguen intactos.
 
-Para el catálogo de seis rutas se verificaron en Edge headless las cinco búsquedas nuevas por código, los 14 trazados, los filtros reales de paradas, el encuadre de todas las partes geométricas, las cuatro opciones distintas de 2-C, el regreso desde sus paradas y los avisos de ausencia de datos de 101A/44. Se revisaron 320, 390, 768, 1024 y 1280 px y orientación horizontal; sin desbordamiento horizontal, excepciones de JavaScript ni consultas ArcGIS. Estas comprobaciones no sustituyen el uso táctil en un dispositivo físico.
-
-Para la identificación visual se comprobaron los seis colores de tarjetas y expresiones del mapa, etiquetas en zoom 11.5/12/13/14.5 e iconos en 14.5/15/16. Se pulsó una etiqueta con el área de clic de líneas desactivada para comprobar su interacción propia; se verificaron iconos y parada seleccionada, selector con teclado, conservación de la instancia del mapa, tamaños responsive y respaldo tras un fallo simulado de Canvas con recuperación al reintentar. No hubo excepciones de JavaScript ni consultas a ArcGIS. Las pruebas unitarias cubren también colores por ruta, compatibilidad con fixtures y fuentes del estilo.
-
-En una vista de 390×844 se emuló además un toque sobre un icono en zoom 16: abrió la ficha de parada y conservó su recorrido. El zoom nativo al 200 % y el uso táctil en un dispositivo físico siguen pendientes de comprobación manual.
+El zoom nativo al 200 % y el uso táctil en un dispositivo físico siguen pendientes de comprobación manual.
 
 No incluye backend, autenticación, horarios, predicciones, seguimiento GPS de buses ni cálculo de viajes.

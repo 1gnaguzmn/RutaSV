@@ -15,7 +15,7 @@ from import_arcgis_vmt import validate_output
 ROOT = Path(__file__).resolve().parents[2]
 SNAPSHOT = "20261029T224448147697Z"
 SOURCE = ROOT / "data" / "processed" / "arcgis-vmt" / SNAPSHOT
-OUTPUT = ROOT / "test-rutasv" / "public" / "data" / "pilot"
+OUTPUT = ROOT / "frontend" / "public" / "data" / "pilot"
 DIRECTION_MAPPING = {"I": "01", "R": "02"}
 
 

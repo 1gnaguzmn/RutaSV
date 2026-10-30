@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA_ROOT = ROOT / "data"
 CONFIG = DATA_ROOT / "demo_routes.json"
 SOURCES = DATA_ROOT / "demo_sources.json"
-OUTPUT = ROOT / "test-rutasv" / "public" / "data" / "transit"
+OUTPUT = ROOT / "frontend" / "public" / "data" / "transit"
 
 
 def load_config(path: Path) -> dict:

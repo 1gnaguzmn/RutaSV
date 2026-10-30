@@ -2,7 +2,8 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { filterRoutes, parseTransitData } from '../src/services/transit.ts'
-import { getGroupStops, getInitialRoute, getRouteStops, groupRoutes, routePositions } from '../src/features/routes/routeData.ts'
+import { getGroupStops, getRouteStops, groupRoutes, routePositions } from '../src/features/routes/routeData.ts'
+import { initialSelection } from '../src/features/routes/selection.ts'
 
 const read = (name: string, extension = 'geojson'): unknown => JSON.parse(readFileSync(new URL(`../public/data/transit/${name}.${extension}`, import.meta.url), 'utf8'))
 const fixture = () => parseTransitData(read('routes'), read('stops'))
@@ -96,8 +97,7 @@ test('rechaza asociaciones a otra ruta, otro sentido o IDs inexistentes y repeti
   }
 })
 
-test('conserva 8-A recorrido 01 como selección inicial sin depender del orden de descarga', () => {
-  const initial = getInitialRoute(fixture().routes.features.reverse())!
-  assert.equal(initial.properties.source_route_code, 'AB008A0SS')
-  assert.equal(initial.properties.recorrido_code, '01')
+test('el estado inicial explora sin ruta aunque los datos conserven la preferencia histórica de la 8-A', () => {
+  assert(fixture().routes.features.some((route) => route.properties.is_initial_route))
+  assert.deepEqual(initialSelection, { view: 'explore', routeId: null, stopId: null })
 })

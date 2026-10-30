@@ -1,19 +1,13 @@
-import type { ExpressionSpecification, StyleSpecification } from 'maplibre-gl'
-import type { Route } from '../../types/transit.ts'
-import { getRouteAppearance } from '../../features/routes/routeAppearance.ts'
+import type { StyleSpecification } from 'maplibre-gl'
 
 export const ROUTE_LABEL_MIN_ZOOM = 12
 export const STOP_ICON_MIN_ZOOM = 15
 export const STOP_HIT_RADIUS = 22
-
-export function routeColorExpression(routes: Route[], token: (name: string) => string): ExpressionSpecification | string {
-  const groups = new Map(routes.map((route) => [route.properties.route_id, getRouteAppearance(route.properties)]))
-  if (!groups.size) return token('--color-route-a')
-  const [first, ...rest] = [...groups]
-  return ['match', ['get', 'route_id'], first[0], token(first[1].colorToken),
-    ...rest.flatMap(([id, appearance]) => [id, token(appearance.colorToken)]),
-    token('--color-route-a')]
-}
+export const STOP_MIN_ZOOM = 11
+export const STOP_CLUSTER_MAX_ZOOM = 14
+export const STOP_CLUSTER_OPTIONS = { cluster: true, clusterRadius: 50, clusterMinPoints: 2, clusterMaxZoom: STOP_CLUSTER_MAX_ZOOM } as const
+export const MAP_INITIAL_CENTER: [number, number] = [-89.19, 13.70]
+export const MAP_INITIAL_ZOOM = 12
 
 export function routeLabelFont(style: StyleSpecification): string[] {
   // El endpoint de glyphs de Liberty ya sirve estas fuentes; no añadir otro proveedor.

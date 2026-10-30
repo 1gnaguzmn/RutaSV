@@ -44,10 +44,16 @@ export interface TransitData {
   stops: FeatureCollection<Point, StopProperties>
 }
 
+export interface StopGroupContext {
+  stopIds: string[]
+  page: number
+}
+
 export type Selection =
   | { view: 'explore'; routeId: null; stopId: null }
   | { view: 'route'; routeId: string; stopId: null }
-  | { view: 'stop'; routeId: string | null; stopId: string }
+  | { view: 'group'; routeId: string | null; stopId: null; group: StopGroupContext }
+  | { view: 'stop'; routeId: string | null; stopId: string; group?: StopGroupContext }
 
 export interface MapInsets {
   top: number

@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { parseTransitData, filterRoutes } from '../src/services/transit.ts'
-import { getRouteStops, getGroupStops, getInitialRoute, groupRoutes } from '../src/features/routes/routeData.ts'
+import { getRouteStops, getGroupStops, groupRoutes } from '../src/features/routes/routeData.ts'
 import { initialSelection, selectionReducer } from '../src/features/routes/selection.ts'
 
 const read = (name: string): unknown => JSON.parse(readFileSync(new URL(`../public/data/pilot/${name}.geojson`, import.meta.url), 'utf8'))
@@ -47,11 +47,10 @@ test('8-A, 8A, 8 A y código original encuentran una sola ruta', () => {
   assert.equal(groupRoutes(filterRoutes(routes, 'inexistente')).length, 0)
 })
 
-test('el recorrido inicial es 01 aunque cambie el orden de los archivos', () => {
+test('la tarjeta del piloto ofrece primero 01 aunque cambie el orden de los archivos', () => {
   const routes = fixture().routes.features.reverse()
-  assert.equal(getInitialRoute(routes)?.properties.recorrido_code, '01')
   assert.equal(groupRoutes(routes)[0].variants[0].properties.recorrido_code, '01')
-  assert.equal(getInitialRoute([]), undefined)
+  assert.deepEqual(groupRoutes([]), [])
 })
 
 test('rechaza asociaciones a un trazado inexistente o sin referencia', () => {

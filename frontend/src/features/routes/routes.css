@@ -27,3 +27,10 @@
 .provenance p { margin: var(--space-2) 0 0; color: var(--color-text-muted); }
 .journey-action { width: 100%; margin-top: var(--space-4); }
 .demo-note { margin: 0 0 var(--space-4); font-size: .875rem; color: var(--color-text-muted); }
+.clear-selection { min-height: 44px; margin-bottom: var(--space-4); padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-sm); color: var(--color-primary); }
+.stop-group-record { display: grid; gap: var(--space-1); }
+.stop-group-record small { color: var(--color-text-muted); font-size: .875rem; }
+.group-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.group-pagination button { padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-sm); }
+.group-pagination button:disabled { cursor: default; }
+.group-pagination span { font-size: .875rem; color: var(--color-text-muted); }

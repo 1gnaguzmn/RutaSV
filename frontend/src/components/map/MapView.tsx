@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { AttributionControl, LngLatBounds, Map, Marker, setWorkerUrl } from 'maplibre-gl'
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import 'maplibre-gl/dist/maplibre-gl.css'
@@ -7,6 +7,7 @@ import { routePositions } from '../../features/routes/routeData'
 import { RouteLayer } from './RouteLayer'
 import { StopLayer } from './StopLayer'
 import { MapControls } from './MapControls'
+import { MAP_INITIAL_CENTER, MAP_INITIAL_ZOOM } from './layerStyles'
 import './map.css'
 
 setWorkerUrl(workerUrl)
@@ -17,23 +18,25 @@ interface Props {
   routeId: string | null
   stopId: string | null
   frameRequest: number
+  interactionRevision: number
   insets: MapInsets
   onRoute: (id: string) => void
   onStop: (id: string) => void
+  onGroup: (ids: string[]) => void
 }
 
 interface CameraSnapshot { center: [number, number]; zoom: number }
 
 export function MapView(props: Props) {
   const [attempt, setAttempt] = useState(0)
-  const [camera, setCamera] = useState<CameraSnapshot>({ center: [-89.19, 13.70], zoom: 12 })
+  const [camera, setCamera] = useState<CameraSnapshot>({ center: MAP_INITIAL_CENTER, zoom: MAP_INITIAL_ZOOM })
   return <MapSession key={attempt} {...props} initialCamera={camera} onRetry={(snapshot) => {
     setCamera(snapshot)
     setAttempt((value) => value + 1)
   }} />
 }
 
-function MapSession({ data, routeId, stopId, frameRequest, insets, onRoute, onStop, initialCamera, onRetry }: Props & { initialCamera: CameraSnapshot; onRetry: (snapshot: CameraSnapshot) => void }) {
+function MapSession({ data, routeId, stopId, frameRequest, interactionRevision, insets, onRoute, onStop, onGroup, initialCamera, onRetry }: Props & { initialCamera: CameraSnapshot; onRetry: (snapshot: CameraSnapshot) => void }) {
   const container = useRef<HTMLDivElement>(null)
   const instance = useRef<Map | null>(null)
   const locationMarker = useRef<Marker | null>(null)
@@ -42,8 +45,14 @@ function MapSession({ data, routeId, stopId, frameRequest, insets, onRoute, onSt
   const [error, setError] = useState<string | null>(null)
   const [locating, setLocating] = useState(false)
   const [notice, setNotice] = useState('')
+  const [groupIssue, setGroupIssue] = useState<{ revision: number; retry: () => void } | null>(null)
+  const revision = useRef(interactionRevision)
+  useLayoutEffect(() => { revision.current = interactionRevision }, [interactionRevision])
+  const reportGroupIssue = useCallback((retry: (() => void) | null) => {
+    setGroupIssue(retry ? { revision: revision.current, retry } : null)
+  }, [])
   const [viewportRevision, setViewportRevision] = useState(0)
-  const lastFrame = useRef(0)
+  const lastFrame = useRef(frameRequest)
   const lastViewport = useRef(0)
   const padding = useRef(insets)
   useEffect(() => { padding.current = insets }, [insets])
@@ -88,10 +97,10 @@ function MapSession({ data, routeId, stopId, frameRequest, insets, onRoute, onSt
 
   const frame = () => {
     if (!map) return
-    const features = data?.routes.features.filter((route) => !routeId || route.properties.id === routeId) ?? []
+    const features = data?.routes.features.filter((route) => route.properties.id === routeId) ?? []
     const bounds = new LngLatBounds()
     features.forEach((route) => routePositions(route).forEach(([lng, lat]) => bounds.extend([lng, lat])))
-    if (bounds.isEmpty()) map.jumpTo({ center: [-89.19, 13.70], zoom: 12 })
+    if (bounds.isEmpty()) map.jumpTo({ center: MAP_INITIAL_CENTER, zoom: MAP_INITIAL_ZOOM, padding: { top: 0, bottom: 0, left: 0, right: 0 } })
     else map.fitBounds(bounds, { padding: padding.current, maxZoom: 14.5, duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200 })
   }
 
@@ -104,7 +113,7 @@ function MapSession({ data, routeId, stopId, frameRequest, insets, onRoute, onSt
     const task = requestAnimationFrame(() => {
       lastFrame.current = frameRequest
       lastViewport.current = viewportRevision
-      const routes = data.routes.features.filter((route) => !routeId || route.properties.id === routeId)
+      const routes = data.routes.features.filter((route) => route.properties.id === routeId)
       const bounds = new LngLatBounds()
       routes.forEach((route) => routePositions(route).forEach(([lng, lat]) => bounds.extend([lng, lat])))
       if (!bounds.isEmpty()) map.fitBounds(bounds, { padding: padding.current, maxZoom: 14.5, duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200 })
@@ -143,11 +152,16 @@ function MapSession({ data, routeId, stopId, frameRequest, insets, onRoute, onSt
 
   return <>
     <div ref={container} className="map-canvas" />
-    {ready && map && data && <><RouteLayer map={map} data={data} selectedId={routeId} onSelect={onRoute} /><StopLayer map={map} data={data} routeId={routeId} selectedId={stopId} onSelect={onStop} /></>}
-    <MapControls map={map} onFrame={frame} onLocate={locate} locating={locating} />
+    {ready && map && data && <><RouteLayer map={map} data={data} selectedId={routeId} onSelect={onRoute} /><StopLayer map={map} data={data} routeId={routeId} selectedId={stopId} interactionRevision={interactionRevision} insets={insets} onSelect={onStop} onGroup={onGroup} onError={reportGroupIssue} /></>}
+    <MapControls map={map} hasRoute={Boolean(routeId)} onFrame={frame} onLocate={locate} locating={locating} />
     <div className="map-messages">
       {!ready && !error && <p className="map-status" role="status">Cargando mapa…</p>}
       {error && <div className="map-status map-error" role="alert"><p>{error}</p><button type="button" onClick={retry}>Reintentar mapa</button><button type="button" onClick={() => setError(null)}>Ocultar aviso</button></div>}
+      {data && groupIssue?.revision === interactionRevision && <div className="map-status map-error group-error" role="alert">
+        <p>No se pudo consultar el grupo de paradas. Puedes seguir explorando o reintentar.</p>
+        <button type="button" onClick={() => { setGroupIssue(null); groupIssue.retry() }}>Reintentar grupo</button>
+        <button type="button" onClick={() => setGroupIssue(null)}>Cerrar aviso</button>
+      </div>}
       {notice && <div className="map-status" role="status"><p>{notice}</p><button type="button" onClick={() => setNotice('')}>Cerrar aviso</button></div>}
     </div>
   </>

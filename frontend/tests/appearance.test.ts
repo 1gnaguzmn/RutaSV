@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { getRouteAppearance } from '../src/features/routes/routeAppearance.ts'
 import { groupRoutes } from '../src/features/routes/routeData.ts'
-import { routeColorExpression, routeLabelFont } from '../src/components/map/layerStyles.ts'
+import { routeLabelFont } from '../src/components/map/layerStyles.ts'
 import { parseTransitData } from '../src/services/transit.ts'
 import type { StyleSpecification } from 'maplibre-gl'
 
@@ -17,14 +17,12 @@ const token = (name: string): string => {
   return value.toUpperCase()
 }
 
-test('las seis rutas tienen colores distintos y coherentes entre mapa y tarjetas', () => {
+test('las seis rutas tienen colores distintos en sus tarjetas y reservan el verde para selección', () => {
   const expected: Record<string, string> = {
     AB008A0SS: '#2563EB', MB030A0: '#B45309', AB029G0: '#7C3AED',
     AB101A2E: '#BE185D', MB044X0: '#0E7490', AB002C0: '#475569',
   }
   const data = fixture()
-  const expression = routeColorExpression(data.routes.features, token)
-  assert(Array.isArray(expression))
   const colors = new Set<string>()
   for (const group of groupRoutes(data.routes.features)) {
     const p = group.variants[0].properties
@@ -32,7 +30,6 @@ test('las seis rutas tienen colores distintos y coherentes entre mapa y tarjetas
     const color = token(appearance.colorToken)
     assert.equal(color, expected[p.source_route_code!])
     assert(cardCss.includes(`.route-code--${appearance.key} { color: var(${appearance.colorToken}); }`))
-    assert.equal(expression[expression.indexOf(p.route_id) + 1], color)
     colors.add(color)
   }
   assert.equal(colors.size, 6)
@@ -53,7 +50,6 @@ test('los fixtures ficticios y códigos todavía no configurados conservan color
   const appearances = data.routes.features.map((route) => getRouteAppearance(route.properties))
   assert.deepEqual(new Set(appearances.map((appearance) => appearance.key)), new Set(['a', 'b']))
   assert.equal(getRouteAppearance({ source_route_code: 'UNKNOWN', color_key: 'b' }).colorToken, '--color-route-b')
-  assert.equal(routeColorExpression([], token), token('--color-route-a'))
 })
 
 test('reutiliza un font stack regular del estilo y no toma una expresión como nombre de fuente', () => {
