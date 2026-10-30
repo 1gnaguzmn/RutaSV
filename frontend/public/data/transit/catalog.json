@@ -1,0 +1,238 @@
+{
+  "config_sha256": "c19ab12cc401e4937f639045883646cf80f5f9f0367c454fdd035e92087ec812",
+  "counts": {
+    "routes": 6,
+    "shapes": 14,
+    "stops": 207
+  },
+  "direction_mapping": {
+    "I": "01",
+    "R": "02"
+  },
+  "output_sha256": {
+    "routes.geojson": "a96e2326c28752b68297476c2b8b39f446e1128ade98a498955c69ac10d95e21",
+    "stops.geojson": "e771711beec04d8975b38520a66e5174f9c9a9309c924b7cf36b3fbbcd5b21c6"
+  },
+  "preparation_sha256": "e45dc5461fc6f6bd1e9f1c88466dae09ecb02eaf0064b0c9a9f23e6decc11504",
+  "routes": [
+    {
+      "ambiguous_stop_associations": 0,
+      "code": "AB008A0SS",
+      "license_status": "unspecified",
+      "missing_stops": false,
+      "multipart_shapes": 0,
+      "processed_output": "20261029T224448147697Z",
+      "provenance_sha256": "3f99f729d0ebd5709d3191cc64e6a7909764ed280be22e84e5254c03747861aa",
+      "shapes": 2,
+      "short_name": "8-A",
+      "source_names": [
+        "8-A"
+      ],
+      "source_snapshot": "20261029T224448147697Z",
+      "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+      "stops": 31,
+      "stops_by_source_direction": {
+        "I": 14,
+        "R": 17
+      },
+      "variants": [
+        {
+          "geometry_type": "LineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:580884fd-24cb-4f6e-b22e-92cc22167bab",
+          "recorrido_code": "01",
+          "source_objectid": 1605
+        },
+        {
+          "geometry_type": "LineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:f935b85e-bf02-4484-9cc8-4456a9869bbb",
+          "recorrido_code": "02",
+          "source_objectid": 1606
+        }
+      ]
+    },
+    {
+      "ambiguous_stop_associations": 0,
+      "code": "MB030A0",
+      "license_status": "unspecified",
+      "missing_stops": false,
+      "multipart_shapes": 1,
+      "processed_output": "20261030T004127450597Z-multipart",
+      "provenance_sha256": "80f8a8a9e32a2c7096c8a59e323a1b8cfe39cb341c837ae63645ca8ac6e50d80",
+      "shapes": 2,
+      "short_name": "30A",
+      "source_names": [
+        "30 A"
+      ],
+      "source_snapshot": "20261030T004127450597Z",
+      "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+      "stops": 67,
+      "stops_by_source_direction": {
+        "I": 34,
+        "R": 33
+      },
+      "variants": [
+        {
+          "geometry_type": "MultiLineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:c5de44ae-9c2c-43af-9edd-bfff8f1842ba",
+          "recorrido_code": "01",
+          "source_objectid": 1927
+        },
+        {
+          "geometry_type": "LineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:c585b842-2826-4236-bd67-c572b3f1f683",
+          "recorrido_code": "02",
+          "source_objectid": 1928
+        }
+      ]
+    },
+    {
+      "ambiguous_stop_associations": 0,
+      "code": "AB029G0",
+      "license_status": "unspecified",
+      "missing_stops": false,
+      "multipart_shapes": 0,
+      "processed_output": "20261030T004136293339Z",
+      "provenance_sha256": "110463628abbb68df181adb12fed68a0859b430ad1638b7aa56362d8a69cedc7",
+      "shapes": 2,
+      "short_name": "29G",
+      "source_names": [
+        "29G"
+      ],
+      "source_snapshot": "20261030T004136293339Z",
+      "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+      "stops": 66,
+      "stops_by_source_direction": {
+        "I": 34,
+        "R": 32
+      },
+      "variants": [
+        {
+          "geometry_type": "LineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:a477e61e-14c6-452b-a340-0d3d1ad65d65",
+          "recorrido_code": "01",
+          "source_objectid": 1691
+        },
+        {
+          "geometry_type": "LineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:a1579b08-6990-4ed3-928b-66aaf7db8449",
+          "recorrido_code": "02",
+          "source_objectid": 1692
+        }
+      ]
+    },
+    {
+      "ambiguous_stop_associations": 0,
+      "code": "AB101A2E",
+      "license_status": "unspecified",
+      "missing_stops": true,
+      "multipart_shapes": 2,
+      "processed_output": "20261030T004144457717Z-multipart",
+      "provenance_sha256": "8dda22a113a56a356dff05526c31b5ca5bddaf3cfe5f98084df2510c1a06c337",
+      "shapes": 2,
+      "short_name": "101A",
+      "source_names": [
+        "101A"
+      ],
+      "source_snapshot": "20261030T004144457717Z",
+      "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+      "stops": 0,
+      "stops_by_source_direction": {},
+      "variants": [
+        {
+          "geometry_type": "MultiLineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:60ee8079-22ad-45ba-a88f-4d6199c2bec4",
+          "recorrido_code": "01",
+          "source_objectid": 1791
+        },
+        {
+          "geometry_type": "MultiLineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:a792593c-cc38-4e85-9555-ecc9e91e8d70",
+          "recorrido_code": "02",
+          "source_objectid": 1792
+        }
+      ]
+    },
+    {
+      "ambiguous_stop_associations": 0,
+      "code": "MB044X0",
+      "license_status": "unspecified",
+      "missing_stops": true,
+      "multipart_shapes": 1,
+      "processed_output": "20261030T004152435659Z-multipart",
+      "provenance_sha256": "75fc6a277890e6232bf567448aea9e37c4e6236988e78a4707545e0db6476767",
+      "shapes": 2,
+      "short_name": "44",
+      "source_names": [
+        "44"
+      ],
+      "source_snapshot": "20261030T004152435659Z",
+      "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+      "stops": 0,
+      "stops_by_source_direction": {},
+      "variants": [
+        {
+          "geometry_type": "MultiLineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:3a3c924b-e0d4-4ec3-b7d6-98335fa5065a",
+          "recorrido_code": "02",
+          "source_objectid": 1983
+        },
+        {
+          "geometry_type": "LineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:6125b02c-a0df-4e04-9465-f543640ecc13",
+          "recorrido_code": "01",
+          "source_objectid": 1984
+        }
+      ]
+    },
+    {
+      "ambiguous_stop_associations": 43,
+      "code": "AB002C0",
+      "license_status": "unspecified",
+      "missing_stops": false,
+      "multipart_shapes": 0,
+      "processed_output": "20261030T004159742740Z",
+      "provenance_sha256": "b88989ce6f61afe6aa8b15ca30f16e878235bf447fc21ce67f8f8af15d8bfb0b",
+      "shapes": 4,
+      "short_name": "2-C",
+      "source_names": [
+        "2C"
+      ],
+      "source_snapshot": "20261030T004159742740Z",
+      "source_updated_at": "2022-09-20T20:09:38.836+00:00",
+      "stops": 43,
+      "stops_by_source_direction": {
+        "I": 26,
+        "R": 17
+      },
+      "variants": [
+        {
+          "geometry_type": "LineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:b8313666-d5f9-4f2f-acc0-b917ce25e38a",
+          "recorrido_code": "01",
+          "source_objectid": 1573
+        },
+        {
+          "geometry_type": "LineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:6aef8024-7c65-4379-ba7b-54cb930dfcb8",
+          "recorrido_code": "02",
+          "source_objectid": 1574
+        },
+        {
+          "geometry_type": "LineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:6a7cdb15-5e4d-444b-aacb-49d710cd6940",
+          "recorrido_code": "01",
+          "source_objectid": 1575
+        },
+        {
+          "geometry_type": "LineString",
+          "id": "arcgis-vmt:177dfb4b9a7940808fe7791098b02315:shape:a87ebef1-2f8e-4d47-8ddc-450d26be3b48",
+          "recorrido_code": "02",
+          "source_objectid": 1576
+        }
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "source": "https://services9.arcgis.com/4ZwMO9wShTnUDuWy/ArcGIS/rest/services/Recorridos_y_paradas_de_rutas_de_El_Salvador_WFL1/FeatureServer",
+  "source_label": "VMT / ArcGIS"
+}

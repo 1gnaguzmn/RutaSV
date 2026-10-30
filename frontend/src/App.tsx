@@ -27,7 +27,7 @@ export default function App() {
   const initialized = useRef(false)
   const desktop = useDesktop()
   const insets = useMapInsets(mapRef, overlayRef, panelRef, desktop, expanded)
-  const initializePilot = useCallback((loaded: TransitData) => {
+  const initializeRoutes = useCallback((loaded: TransitData) => {
     if (initialized.current) return
     const first = getInitialRoute(loaded.routes.features)
     if (!first) return
@@ -35,7 +35,7 @@ export default function App() {
     dispatch({ type: 'route', id: first.properties.id })
     setFrameRequest((value) => value + 1)
   }, [])
-  const { data, loading, error, retry } = useTransitData(initializePilot)
+  const { data, loading, error, retry } = useTransitData(initializeRoutes)
   const routes = data?.routes.features ?? []
   const stops = data?.stops.features ?? []
   const results = filterRoutes(routes, query)
@@ -78,10 +78,10 @@ export default function App() {
       </div>
     </section>
     <BottomSheet expanded={expanded} desktop={desktop} title={title} summary={summary} focusKey={String(navigation)} panelRef={panelRef} onToggle={() => setExpanded((value) => !value)} onBack={selection.view !== 'explore' ? back : undefined}>
-      {loading && <p role="status">Cargando ruta piloto…</p>}
+      {loading && <p role="status">Cargando rutas…</p>}
       {error && <div role="alert" className="data-error"><p>{error}</p><button type="button" className="primary-button" onClick={retry}>Reintentar datos</button></div>}
       {!loading && !error && selection.view === 'explore' && <>
-        <p className="demo-note">Ruta 8-A · Fuente VMT / ArcGIS</p>
+        <p className="demo-note">Rutas del AMSS · Fuente VMT / ArcGIS</p>
         <RouteList routes={results} stops={stops} onSelect={selectRoute} searching={Boolean(query.trim())} />
         <button type="button" className="primary-button journey-action" onClick={() => setPlannerNotice(true)}>Planificar un viaje</button>
         {plannerNotice && <p role="status" className="muted">Disponible en una próxima fase.</p>}

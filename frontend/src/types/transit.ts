@@ -1,4 +1,4 @@
-import type { Feature, FeatureCollection, LineString, Point } from 'geojson'
+import type { Feature, FeatureCollection, LineString, MultiLineString, Point } from 'geojson'
 
 export interface Provenance {
   source: string
@@ -20,6 +20,7 @@ export interface RouteProperties extends Provenance {
   source_route_code?: string
   recorrido_code?: string
   stop_sequence_status?: 'pending' | 'reviewed_subset'
+  is_initial_route?: boolean
 }
 
 export interface StopProperties extends Provenance {
@@ -28,17 +29,18 @@ export interface StopProperties extends Provenance {
   source_route_code?: string
   source_direction_code?: 'I' | 'R'
   shape_id?: string
+  shape_ids?: string[]
   association_basis?: 'demo_direction_mapping'
 }
 
-export type Route = Feature<LineString, RouteProperties>
+export type Route = Feature<LineString | MultiLineString, RouteProperties>
 export type Stop = Feature<Point, StopProperties>
 export interface RouteGroup {
   id: string
   variants: Route[]
 }
 export interface TransitData {
-  routes: FeatureCollection<LineString, RouteProperties>
+  routes: FeatureCollection<LineString | MultiLineString, RouteProperties>
   stops: FeatureCollection<Point, StopProperties>
 }
 

@@ -20,6 +20,9 @@ export function RouteDetails({ route, routes, stops, onStop, onRoute }: { route:
       </select>
     </div> : <p className="muted">{p.direction}</p>}
     <h3>{routeStops.length} paradas del recorrido</h3>
+    {routeStops.length === 0 && <p className="demo-note">La fuente no incluye paradas para este recorrido. Puedes explorar su trazado en el mapa.</p>}
+    {routeStops.some((stop) => (stop.properties.shape_ids?.length ?? 0) > 1) &&
+      <p className="demo-note">La fuente contiene varios trazados con el mismo código de recorrido. Las paradas se muestran en todos los trazados compatibles; no se especifica una variante única.</p>}
     {unordered && <p className="demo-note">Orden de viaje no definido · lista alfabética.</p>}
     <StopList className={`stop-list ${unordered ? 'stop-list--unordered' : ''}`}>{routeStops.map((stop) =>
       <li key={stop.properties.id}><button type="button" onClick={() => onStop(stop.properties.id)}>{stop.properties.name}<span aria-hidden="true">→</span></button></li>

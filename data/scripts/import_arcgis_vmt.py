@@ -14,7 +14,7 @@ from pathlib import Path
 import pyproj
 import shapely
 from pyproj import Transformer
-from shapely.geometry import LineString, Point
+from shapely.geometry import LineString, MultiLineString, Point
 
 from arcgis_source import (
     ITEM_ID, PILOT, SERVICE, VERSION, ImportFailure, fetch_snapshot,
@@ -71,7 +71,7 @@ def provenance(snapshot_id: str, layer: int, attributes: dict) -> dict:
             "source_snapshot": snapshot_id}
 
 
-def normalize_records(manifest: dict, layers: dict[int, list[dict]]) -> tuple[list, list, list, list]:
+def normalize_records(manifest: dict, layers: dict[int, list[dict]], allow_multipart: bool = False) -> tuple[list, list, list, list]:
     routes, stops, rejected, warnings = [], [], [], []
     snapshot = manifest["snapshot_id"]
     code = manifest["route_code"]
@@ -96,12 +96,15 @@ def normalize_records(manifest: dict, layers: dict[int, list[dict]]) -> tuple[li
             paths = geometry.get("paths")
             if not isinstance(paths, list) or not paths:
                 raise ImportFailure("empty_geometry")
-            if len(paths) != 1:
+            if len(paths) != 1 and not allow_multipart:
                 raise ImportFailure("unsupported_multipart_geometry")
-            if not isinstance(paths[0], list) or len(paths[0]) < 2:
+            if any(not isinstance(path, list) or len(path) < 2 for path in paths):
                 raise ImportFailure("empty_or_short_linestring")
-            pairs = [convert_position(vertex) for vertex in paths[0]]
-            line = LineString([pair[1] for pair in pairs])
+            parts = [[convert_position(vertex) for vertex in path] for path in paths]
+            lines = [LineString([pair[1] for pair in part]) for part in parts]
+            if any(line.is_empty or not line.is_valid or line.length == 0 for line in lines):
+                raise ImportFailure("invalid_or_zero_length_geometry")
+            line = lines[0] if len(lines) == 1 else MultiLineString(lines)
             if line.is_empty or not line.is_valid or line.length == 0:
                 raise ImportFailure("invalid_or_zero_length_geometry")
             direction = text(attributes.get("RECORRIDO"))
@@ -113,8 +116,10 @@ def normalize_records(manifest: dict, layers: dict[int, list[dict]]) -> tuple[li
                           "direction": f"Recorrido {direction or 'sin código'} · sentido pendiente de revisión",
                           "color_key": "a", "stop_ids": [], "stop_sequence_status": "pending",
                           "stop_sequence_complete": False}
+            coordinates = [[pair[0] for pair in part] for part in parts]
             feature = {"type": "Feature", "properties": properties,
-                       "geometry": {"type": "LineString", "coordinates": [pair[0] for pair in pairs]}}
+                       "geometry": {"type": "LineString" if len(parts) == 1 else "MultiLineString",
+                                    "coordinates": coordinates[0] if len(parts) == 1 else coordinates}}
             routes.append({"feature": feature, "metric": line, "code": code, "direction": direction})
             if not line.is_simple:
                 warnings.append({"kind": "self_intersections_order_ambiguous", "shape_id": properties["id"]})
@@ -236,6 +241,9 @@ def apply_reviews(routes: list, candidates: list[dict], payload: bytes | None) -
                                        "direction": rows[0]["direction"], "stop_sequence_status": "reviewed_subset"})
         if rows[0]["orientation"] == "reverse":
             feature["geometry"]["coordinates"].reverse()
+            if feature["geometry"]["type"] == "MultiLineString":
+                for part in feature["geometry"]["coordinates"]:
+                    part.reverse()
         for row in rows:
             candidate = lookup[row["shape_id"], row["stop_id"]]
             candidate.update({key: row[key] for key in required - {"shape_id", "stop_id", "snapshot_id"}})
@@ -268,8 +276,9 @@ def validate_geojson(routes: dict, stops: dict) -> None:
         if feature.get("type") != "Feature" or not text(identifier) or identifier in shape_ids:
             raise ImportFailure("Recorrido con identificador inválido o repetido")
         shape_ids.add(identifier)
-        if geometry.get("type") != "LineString" or not isinstance(coordinates, list) or len(coordinates) < 2 or not all(wgs_position(p) for p in coordinates):
-            raise ImportFailure("LineString inválido o coordenadas invertidas")
+        parts = [coordinates] if geometry.get("type") == "LineString" else coordinates if geometry.get("type") == "MultiLineString" else None
+        if not isinstance(parts, list) or not parts or any(not isinstance(part, list) or len(part) < 2 or not all(wgs_position(p) for p in part) for part in parts):
+            raise ImportFailure("LineString/MultiLineString inválido o coordenadas invertidas")
         if not all(text(properties.get(key)) for key in ("route_id", "short_name", "long_name", "direction", "source")) or properties.get("color_key") != "a":
             raise ImportFailure("Propiedades del recorrido incompletas")
         stop_ids = properties.get("stop_ids")
@@ -289,9 +298,9 @@ def csv_bytes(rows: list[dict]) -> bytes:
     return output.getvalue().encode("utf-8")
 
 
-def process_snapshot(raw: Path, data_root: Path, review: Path | None = None, output_id: str | None = None) -> Path:
+def process_snapshot(raw: Path, data_root: Path, review: Path | None = None, output_id: str | None = None, allow_multipart: bool = False) -> Path:
     manifest, layers = load_snapshot(raw)
-    routes, stops, rejected, warnings = normalize_records(manifest, layers)
+    routes, stops, rejected, warnings = normalize_records(manifest, layers, allow_multipart)
     candidates = generate_candidates(routes, stops, manifest["snapshot_id"])
     review_payload = review.read_bytes() if review else None
     review_summary = apply_reviews(routes, candidates, review_payload)
@@ -338,7 +347,8 @@ def process_snapshot(raw: Path, data_root: Path, review: Path | None = None, out
         "declared_dates": manifest.get("declared_dates"), "layer_editing_info": {key: value.get("editing_info") for key, value in manifest["layers"].items()},
         "transformations": {"source_crs": "EPSG:3857", "output_crs": "EPSG:4326", "metric_crs": "EPSG:32616", "always_xy": True, "dimensions": 2, "decimal_places": 7,
                             "review_threshold_m": REVIEW_METERS, "automatic_exclusion_threshold_m": EXCLUDE_METERS,
-                            "geometry_preferred_over_coordinate_attributes": True, "physical_stops_merged": False},
+                            "geometry_preferred_over_coordinate_attributes": True, "physical_stops_merged": False,
+                            "multipart_preserved": allow_multipart},
         "versions": {"python": platform.python_version(), "shapely": shapely.__version__, "pyproj": pyproj.__version__, "proj": pyproj.proj_version_str},
         "implementation_sha256": {name: sha256((Path(__file__).parent / name).read_bytes())
                                   for name in ("import_arcgis_vmt.py", "arcgis_source.py", "requirements.lock.txt")},
@@ -373,10 +383,13 @@ def main(argv: list[str] | None = None) -> int:
         command = commands.add_parser(name)
         command.add_argument("--route-code", default=PILOT)
         command.add_argument("--snapshot-id")
+        if name == "run":
+            command.add_argument("--allow-multipart", action="store_true")
     process = commands.add_parser("process")
     process.add_argument("snapshot_id")
     process.add_argument("--review", type=Path)
     process.add_argument("--output-id")
+    process.add_argument("--allow-multipart", action="store_true")
     validate = commands.add_parser("validate")
     validate.add_argument("output_id")
     args = parser.parse_args(argv)
@@ -387,10 +400,10 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Originales: {raw}")
             if args.command == "fetch":
                 return 0
-            output = process_snapshot(raw, data_root)
+            output = process_snapshot(raw, data_root, allow_multipart=args.allow_multipart)
         elif args.command == "process":
             snapshot_id = valid_snapshot_id(args.snapshot_id)
-            output = process_snapshot(data_root / "raw" / "arcgis-vmt" / snapshot_id, data_root, args.review, args.output_id)
+            output = process_snapshot(data_root / "raw" / "arcgis-vmt" / snapshot_id, data_root, args.review, args.output_id, args.allow_multipart)
         else:
             output = data_root / "processed" / "arcgis-vmt" / valid_snapshot_id(args.output_id)
         quality = validate_output(output)

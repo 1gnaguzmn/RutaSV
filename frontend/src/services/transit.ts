@@ -14,6 +14,12 @@ function position(value: unknown): boolean {
     typeof value[1] === 'number' && Number.isFinite(value[1]) && Math.abs(value[1]) <= 90
 }
 
+function routeGeometry(value: Record<string, unknown>): boolean {
+  const parts = value.type === 'LineString' ? [value.coordinates] : value.type === 'MultiLineString' ? value.coordinates : null
+  return Array.isArray(parts) && parts.length > 0 && parts.every((part: unknown) =>
+    Array.isArray(part) && part.length >= 2 && part.every(position))
+}
+
 function provenance(value: Record<string, unknown>): boolean {
   return text(value.source) &&
     ['demonstration', 'verified', 'unverified'].includes(String(value.verification_status)) &&
@@ -44,6 +50,9 @@ export function parseTransitData(routes: unknown, stops: unknown): TransitData {
       !record(feature.properties) || !text(feature.properties.id) ||
       !text(feature.properties.name) || !provenance(feature.properties) ||
       !optionalText(feature.properties, 'shape_id') || !optionalText(feature.properties, 'source_route_code') ||
+      (feature.properties.shape_ids !== undefined && (!Array.isArray(feature.properties.shape_ids) ||
+        feature.properties.shape_ids.length === 0 || !feature.properties.shape_ids.every(text) ||
+        new Set(feature.properties.shape_ids).size !== feature.properties.shape_ids.length)) ||
       (feature.properties.source_direction_code !== undefined && !['I', 'R'].includes(String(feature.properties.source_direction_code))) ||
       (feature.properties.association_basis !== undefined && feature.properties.association_basis !== 'demo_direction_mapping') ||
       stopIds.has(feature.properties.id)) {
@@ -53,13 +62,13 @@ export function parseTransitData(routes: unknown, stops: unknown): TransitData {
   }
   for (const feature of routeFeatures) {
     if (!record(feature) || feature.type !== 'Feature' || !record(feature.geometry) ||
-      feature.geometry.type !== 'LineString' || !Array.isArray(feature.geometry.coordinates) ||
-      feature.geometry.coordinates.length < 2 || !feature.geometry.coordinates.every(position) ||
+      !routeGeometry(feature.geometry) ||
       !record(feature.properties) || !text(feature.properties.id) ||
       !text(feature.properties.route_id) || !text(feature.properties.short_name) ||
       !text(feature.properties.long_name) || !text(feature.properties.direction) ||
       !['a', 'b'].includes(String(feature.properties.color_key)) || !provenance(feature.properties) ||
       !optionalText(feature.properties, 'source_route_code') || !optionalText(feature.properties, 'recorrido_code') ||
+      (feature.properties.is_initial_route !== undefined && typeof feature.properties.is_initial_route !== 'boolean') ||
       (feature.properties.stop_sequence_status !== undefined && !['pending', 'reviewed_subset'].includes(String(feature.properties.stop_sequence_status))) ||
       !Array.isArray(feature.properties.stop_ids) ||
       !feature.properties.stop_ids.every((id: unknown) => text(id) && stopIds.has(id)) ||
@@ -68,13 +77,31 @@ export function parseTransitData(routes: unknown, stops: unknown): TransitData {
     }
     shapeIds.add(feature.properties.id)
   }
+  const shapeProperties = new Map(routeFeatures.map((feature) => {
+    const p = (feature as { properties: Record<string, unknown> }).properties
+    return [String(p.id), p]
+  }))
   for (const feature of stopFeatures) {
     const p = (feature as { properties: Record<string, unknown> }).properties
     if (p.shape_id !== undefined && !shapeIds.has(String(p.shape_id))) {
       throw new Error('Una parada está asociada a un recorrido inexistente.')
     }
-    if (p.association_basis === 'demo_direction_mapping' && !p.shape_id) {
+    if (p.association_basis === 'demo_direction_mapping' && !p.shape_id && !p.shape_ids) {
       throw new Error('La asociación de una parada necesita un recorrido.')
+    }
+    const references = [...(p.shape_ids as string[] | undefined ?? []), ...(p.shape_id ? [String(p.shape_id)] : [])]
+    for (const id of references) {
+      const shape = shapeProperties.get(id)
+      if (!shape) throw new Error('Una parada está asociada a un recorrido inexistente.')
+      if (p.source_route_code && shape.source_route_code !== p.source_route_code) {
+        throw new Error('Una parada está asociada a una ruta distinta.')
+      }
+      if (p.source_direction_code && shape.recorrido_code !== (p.source_direction_code === 'I' ? '01' : '02')) {
+        throw new Error('Una parada está asociada a un sentido distinto.')
+      }
+    }
+    if (p.shape_id && p.shape_ids && !(p.shape_ids as string[]).includes(String(p.shape_id))) {
+      throw new Error('Las referencias de la parada son contradictorias.')
     }
   }
   // La estructura y las referencias se comprueban antes de cruzar el límite de datos.
@@ -90,8 +117,8 @@ export function filterRoutes(routes: Route[], query: string): Route[] {
 
 export async function loadTransitData(signal?: AbortSignal): Promise<TransitData> {
   const read = async (name: string): Promise<unknown> => {
-    const response = await fetch(`${import.meta.env.BASE_URL}data/pilot/${name}.geojson`, { signal })
-    if (!response.ok) throw new Error('No se pudieron cargar los datos de la ruta piloto.')
+    const response = await fetch(`${import.meta.env.BASE_URL}data/transit/${name}.geojson`, { signal })
+    if (!response.ok) throw new Error('No se pudieron cargar los datos de las rutas.')
     return response.json()
   }
   const [routes, stops] = await Promise.all([read('routes'), read('stops')])

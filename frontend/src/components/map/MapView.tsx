@@ -3,6 +3,7 @@ import { AttributionControl, LngLatBounds, Map, Marker, setWorkerUrl } from 'map
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import type { MapInsets, TransitData } from '../../types/transit'
+import { routePositions } from '../../features/routes/routeData'
 import { RouteLayer } from './RouteLayer'
 import { StopLayer } from './StopLayer'
 import { MapControls } from './MapControls'
@@ -89,7 +90,7 @@ function MapSession({ data, routeId, stopId, frameRequest, insets, onRoute, onSt
     if (!map) return
     const features = data?.routes.features.filter((route) => !routeId || route.properties.id === routeId) ?? []
     const bounds = new LngLatBounds()
-    features.forEach((route) => route.geometry.coordinates.forEach(([lng, lat]) => bounds.extend([lng, lat])))
+    features.forEach((route) => routePositions(route).forEach(([lng, lat]) => bounds.extend([lng, lat])))
     if (bounds.isEmpty()) map.jumpTo({ center: [-89.19, 13.70], zoom: 12 })
     else map.fitBounds(bounds, { padding: padding.current, maxZoom: 14.5, duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200 })
   }
@@ -105,7 +106,7 @@ function MapSession({ data, routeId, stopId, frameRequest, insets, onRoute, onSt
       lastViewport.current = viewportRevision
       const routes = data.routes.features.filter((route) => !routeId || route.properties.id === routeId)
       const bounds = new LngLatBounds()
-      routes.forEach((route) => route.geometry.coordinates.forEach(([lng, lat]) => bounds.extend([lng, lat])))
+      routes.forEach((route) => routePositions(route).forEach(([lng, lat]) => bounds.extend([lng, lat])))
       if (!bounds.isEmpty()) map.fitBounds(bounds, { padding: padding.current, maxZoom: 14.5, duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200 })
     })
     return () => cancelAnimationFrame(task)

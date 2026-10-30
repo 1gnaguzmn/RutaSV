@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "initial_route_code": "AB008A0SS",
+  "direction_mapping": { "I": "01", "R": "02" },
+  "routes": [
+    { "code": "AB008A0SS", "short_name": "8-A" },
+    { "code": "MB030A0", "short_name": "30A" },
+    { "code": "AB029G0", "short_name": "29G" },
+    { "code": "AB101A2E", "short_name": "101A" },
+    { "code": "MB044X0", "short_name": "44" },
+    { "code": "AB002C0", "short_name": "2-C" }
+  ]
+}

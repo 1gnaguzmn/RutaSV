@@ -13,7 +13,7 @@ export function groupRoutes(routes: Route[]): RouteGroup[] {
 
 export function getRouteStops(route: Route, stops: Stop[]): Stop[] {
   if (route.properties.stop_sequence_status === 'pending') {
-    return stops.filter((stop) => stop.properties.shape_id === route.properties.id)
+    return stops.filter((stop) => stop.properties.shape_id === route.properties.id || stop.properties.shape_ids?.includes(route.properties.id))
       .sort((a, b) => a.properties.name.localeCompare(b.properties.name, 'es') || a.properties.id.localeCompare(b.properties.id))
   }
   const byId = new Map(stops.map((stop) => [stop.properties.id, stop]))
@@ -28,5 +28,11 @@ export function getGroupStops(group: RouteGroup, stops: Stop[]): Stop[] {
 }
 
 export function getInitialRoute(routes: Route[]): Route | undefined {
-  return routes.find((route) => route.properties.recorrido_code === '01') ?? routes[0]
+  const preferred = routes.filter((route) => route.properties.is_initial_route)
+  const candidates = preferred.length ? preferred : routes
+  return candidates.find((route) => route.properties.recorrido_code === '01') ?? candidates[0]
+}
+
+export function routePositions(route: Route): number[][] {
+  return route.geometry.type === 'MultiLineString' ? route.geometry.coordinates.flat() : route.geometry.coordinates
 }

@@ -1,6 +1,45 @@
-# RutaSV · importación del piloto ArcGIS VMT
+# RutaSV · importación ArcGIS VMT
 
-Importador local y de solo lectura para auditar `AB008A0SS` (nombre publicado `8-A`). No cambia el frontend, no escribe una base de datos ni publica los resultados. Los registros importados son datos de una fuente externa **sin verificación de campo**; no son los recorridos ficticios de la demo.
+Importación local y de solo lectura desde ArcGIS. El importador individual conserva las capturas originales y los procesados; un segundo comando prepara una copia estática para el frontend. No escribe una base de datos ni despliega resultados. Los registros importados son datos de una fuente externa **sin verificación de campo**; no son recorridos ficticios.
+
+## Catálogo de la demo: seis rutas
+
+`demo_routes.json` declara los nombres de presentación, códigos exactos y la correspondencia de demo `I→01 / R→02`. `demo_sources.json` fija una salida procesada por código: conserva la instantánea de la 8-A y añade cinco capturas independientes. Los identificadores UTC de algunas capturas comienzan por `20261030`; se hicieron el 29 de octubre por la tarde en El Salvador.
+
+| Ruta | Código exacto | Trazados | Registros de paradas I / R |
+|---|---|---:|---:|
+| 8-A | `AB008A0SS` | 2 | 14 / 17 |
+| 30A | `MB030A0` | 2 | 34 / 33 |
+| 29G | `AB029G0` | 2 | 34 / 32 |
+| 101A | `AB101A2E` | 2 | 0 / 0 |
+| 44 | `MB044X0` | 2 | 0 / 0 |
+| 2-C | `AB002C0` | 4 | 26 / 17 |
+
+Total: **6 rutas, 14 trazados y 207 registros**, sin fusionar puntos coincidentes. Los códigos son coincidencias exactas; no se amplían por prefijo ni se aplica una delimitación automática del AMSS.
+
+```powershell
+# Descargar solo rutas nuevas del catálogo; conservar progreso si falla una posterior.
+.\data\.venv\Scripts\python.exe data/scripts/import_demo_routes.py fetch
+
+# Validar capturas y regenerar únicamente la copia estática, sin red.
+.\data\.venv\Scripts\python.exe data/scripts/import_demo_routes.py prepare
+
+# Hacer ambos pasos. Las salidas ya registradas se validan y se reutilizan.
+.\data\.venv\Scripts\python.exe data/scripts/import_demo_routes.py run
+```
+
+`prepare` genera `test-rutasv/public/data/transit/routes.geojson`, `stops.geojson` y `catalog.json`. El catálogo guarda por ruta: nombres originales, código, instantánea, edición declarada, identificadores de trazados, tipos geométricos, conteos, ausencia de paradas, asociaciones ambiguas, licencia declarada y hash de procedencia. Incluye hashes de GeoJSON, configuración y preparación. La aplicación usa esos archivos locales; no consulta ArcGIS ni necesita Python para arrancar.
+
+Para añadir otra ruta, agregar `{ "code": "CODIGO_EXACTO", "short_name": "NOMBRE" }` a `demo_routes.json` y ejecutar `run`. Los argumentos `--config`, `--sources`, `--data-root` y `--output` permiten preparar otro catálogo. Si el servicio cambia sentidos, geometrías o deja registros rechazados, el comando falla antes de reemplazar la copia pública para permitir revisar el caso. Para capturar una actualización de una ruta, usar el importador individual y cambiar explícitamente su referencia en `demo_sources.json`; no se sobrescriben capturas anteriores.
+
+Particularidades conservadas de la fuente:
+
+- **30A, 101A y 44** incluyen cuatro registros multipartitos en total. La nueva preparación activa `allow_multipart` y exporta `MultiLineString`, manteniendo cada parte separada y sin añadir conexiones. Los procesados iniciales que los rechazaban también se conservan; las salidas ampliadas usan el sufijo `-multipart`.
+- **101A y 44** no tienen registros de paradas en la capa consultada. Eso no significa que operen sin paradas; el frontend muestra el trazado y un aviso de ausencia de datos.
+- **2-C** tiene dos registros 01 y dos 02. Se conservan los cuatro GlobalID y sus geometrías; las etiquetas añaden el OBJECTID para distinguirlos. Las paradas `I` se vinculan a ambos 01 y las `R` a ambos 02 mediante `shape_ids`. No se adjudica una variante única ni se duplican registros de paradas. El panel explica esta ambigüedad.
+- Los nombres solicitados (`30A`, `2-C`) son etiquetas de presentación. `source_attributes.NAME` y `long_name` conservan los nombres publicados (`30 A`, `2C`). `stop_ids` queda vacío, la lista es alfabética y la asociación de visualización sigue identificada como `demo_direction_mapping`.
+
+Las capturas originales y los procesados permanecen separados e inmutables. `public/data/pilot/` y los fixtures ficticios anteriores se conservan. Este catálogo mantiene `unverified`, `verified_at: null`, la edición de 2022 y el estado de licencia documentado; no registra una revisión de campo ficticia.
 
 ## Entorno y dependencias
 
@@ -70,7 +109,7 @@ Los procesados conservan `source_attributes`, identificadores de origen, instant
 - Las geometrías originales EPSG:3857 se transforman con `always_xy=True` a GeoJSON EPSG:4326, 2D, `[longitud, latitud]`, con 7 decimales. Esta precisión de escritura no representa exactitud del levantamiento.
 - Las distancias y posiciones se calculan en UTM 16N (EPSG:32616), apropiado para este piloto del AMSS. No es una política de análisis nacional: otra zona requiere reevaluar la proyección.
 - Se prefiere la geometría del servicio sobre los atributos de coordenadas. Las diferencias superiores a 5 m se informan, sin desplazar ni corregir automáticamente los puntos.
-- Geometrías vacías, inválidas, curvas, multipartitas, códigos ausentes o nombres de parada vacíos quedan en `rejected_records.json`, con razón y registro original. No se unen partes inventando segmentos. Los códigos de sentido desconocidos se conservan y se advierten.
+- Geometrías vacías, inválidas, curvas, códigos ausentes o nombres de parada vacíos quedan en `rejected_records.json`, con razón y registro original. El importador individual rechaza multipartitas por defecto; `run/process --allow-multipart` permite conservarlas como `MultiLineString`. El catálogo activa esa opción. No se unen partes inventando segmentos. Los códigos de sentido desconocidos se conservan y se advierten.
 - Los puntos coincidentes no se fusionan. Pueden ser registros por ruta/sentido, no un catálogo de paradas físicas únicas.
 - Los trazados con autointersecciones se señalan porque la proyección de puntos sobre ellos puede producir un orden ambiguo.
 
@@ -125,9 +164,9 @@ Las pruebas no usan la red: datos sintéticos comprueban inventarios, truncamien
 
 Para ver los hallazgos del piloto ejecutado, consultar `PILOT_REPORT.md` y el `quality_report.json` de su instantánea. Este proceso no valida horarios, llegadas, operación vigente, orden completo de paradas ni posición de buses.
 
-## Copia estática para el frontend
+## Preparación histórica del piloto individual
 
-La demo utiliza la instantánea `20261029T224448147697Z` como referencia. Se añadió una preparación explícita, separada del importador:
+La 8-A utiliza la instantánea `20261029T224448147697Z` como referencia. Su preparación individual sigue disponible, aunque el frontend carga ahora el catálogo de seis rutas:
 
 ```powershell
 .\data\.venv\Scripts\python.exe data/scripts/prepare_pilot_demo.py
