@@ -1,6 +1,6 @@
 # RutaSV
 
-Demo web móvil de un asistente de viaje para San Salvador y el AMSS. La versión 0.2 combina exploración de rutas con tres viajes preparados, instrucciones paso a paso, recomendaciones de salida y avisos simulados para rutinas locales. React, TypeScript, Vite y MapLibre GL JS, sin backend ni autenticación.
+Demo web móvil de un asistente de viaje para San Salvador y el AMSS. La versión 1.2 combina exploración de rutas con tres viajes preparados, instrucciones paso a paso, recomendaciones de salida y avisos simulados para rutinas locales. React, TypeScript, Vite y MapLibre GL JS, sin backend ni autenticación.
 
 ## Ejecutar el frontend
 
