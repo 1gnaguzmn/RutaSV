@@ -1,0 +1,169 @@
+/* Modo presentación: reutiliza tokens.css (colores, radios, sombras) de la app. */
+:root {
+  --p-danger: #C0262D;
+  --p-danger-soft: #FDECEC;
+  --p-walk: #5B6F65;
+  --p-faded: #B9C6BF;
+  --p-ease: cubic-bezier(.2, .7, .2, 1);
+}
+html, body, #root { height: 100%; }
+body { background: var(--color-map-background); overflow: hidden; }
+
+.stage { display: grid; place-items: center; height: 100vh; height: 100dvh; padding: 2vh 16px; }
+
+/* Marco del teléfono, centrado y escalado al alto de la pantalla. */
+.phone {
+  container-type: inline-size;
+  height: min(96dvh, calc((100vw - 32px) * 2.05));
+  aspect-ratio: 9 / 18.5;
+  padding: 1.4%;
+  border-radius: 7% / 3.5%;
+  background: #12201b;
+  box-shadow: 0 30px 60px rgba(23, 60, 50, .28), inset 0 0 0 2px #2c3b35;
+}
+.phone-screen {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 5.8% / 2.8%;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-size: 4.25cqw;
+  line-height: 1.35;
+}
+
+.phone-top { display: flex; align-items: center; justify-content: space-between; gap: .5em; padding: 1em 1em .5em; flex: 0 0 auto; }
+.p-brand { display: flex; align-items: center; gap: .4em; font-weight: 800; font-size: 1.1em; color: var(--color-primary-dark); }
+.p-brand-mark { display: grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: .45em; background: var(--color-primary); color: #fff; font-size: .95em; }
+/* Etiqueta "Datos de ejemplo": pequeña pero legible, siempre visible. */
+.data-label { padding: .2em .6em; border: 1.5px solid #8A6100; border-radius: 999px; background: #FFF4D6; color: #5C4100; font-size: .7em; font-weight: 700; white-space: nowrap; }
+
+.screen { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: .3em 1em 1.2em; animation: screen-in 240ms var(--p-ease) both; scrollbar-width: none; }
+.tab-page { display: flex; flex-direction: column; gap: .75em; }
+@keyframes screen-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes pop-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* Barra inferior con tres pestañas */
+.tab-bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); flex: 0 0 auto; padding: .35em .4em .9em; border-top: 1px solid var(--color-border); background: #fff; }
+.tab { display: grid; justify-items: center; gap: .15em; min-height: 3.2em; padding: .3em .2em; border: 0; border-radius: .7em; background: none; color: var(--color-text-muted); font-size: .8em; font-weight: 700; }
+.tab svg { font-size: 1.6em; }
+.tab[aria-current=page] { color: var(--color-primary); background: var(--color-primary-soft); }
+
+/* Texto y botones */
+.p-title { margin: .1em 0 0; font-size: 1.35em; line-height: 1.2; font-weight: 800; }
+.p-subtitle { margin: 0; font-size: 1.05em; font-weight: 800; }
+.intro { margin: 0; font-size: .95em; color: var(--color-text-muted); font-weight: 600; }
+.fine-print { margin: 0; font-size: .78em; color: var(--color-text-muted); }
+.p-primary, .p-secondary { display: flex; align-items: center; justify-content: center; gap: .5em; width: 100%; min-height: 2.8em; padding: .6em 1em; border: 0; border-radius: .7em; background: var(--color-primary); color: #fff; font-size: 1.05em; font-weight: 800; transition: background 150ms ease, transform 150ms ease; }
+.p-primary:hover { background: var(--color-primary-dark); }
+.p-primary:active, .route-summary:active, .notification.is-tappable:active, .banner:active { transform: scale(.98); }
+.p-primary:disabled, .p-secondary:disabled { opacity: .45; cursor: default; }
+.p-secondary { border: 2px solid var(--color-border); background: #fff; color: var(--color-primary-dark); }
+.link-button { min-height: 2em; padding: .2em .3em; border: 0; background: none; color: var(--color-primary); font-weight: 700; font-size: .85em; text-decoration: underline; text-underline-offset: 3px; }
+.link-button.is-back { align-self: flex-start; padding-left: 0; text-decoration: none; font-size: .95em; }
+
+/* Campos Desde / Hasta con sugerencias */
+.place-fields { display: grid; gap: .5em; }
+.place-field { position: relative; display: flex; align-items: center; gap: .65em; padding: .45em .8em; border: 2px solid var(--color-border); border-radius: .9em; background: #fff; }
+.place-field:focus-within { border-color: var(--color-primary); }
+.place-dot { display: grid; place-items: center; flex: 0 0 auto; width: 1.6em; height: 1.6em; border-radius: 50%; color: #fff; font-weight: 800; font-size: .85em; }
+.place-dot.is-origin { background: var(--color-journey-origin); }
+.place-dot.is-destination { background: var(--color-journey-destination); }
+.place-text { display: grid; flex: 1; min-width: 0; }
+.place-label { font-size: .72em; font-weight: 700; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: .04em; }
+.place-input { width: 100%; min-width: 0; min-height: 1.6em; padding: 0; border: 0; outline: none; background: none; color: var(--color-text); font-size: 1.05em; font-weight: 800; }
+.place-input::placeholder { color: #9AA9A1; font-weight: 600; }
+.place-field:has(.place-input:focus-visible) { outline: 3px solid var(--color-primary); outline-offset: 2px; }
+.suggestions { position: absolute; z-index: 5; top: calc(100% + 4px); left: 0; right: 0; margin: 0; padding: .3em; list-style: none; border: 1px solid var(--color-border); border-radius: .8em; background: #fff; box-shadow: var(--shadow-floating); animation: pop-in 180ms var(--p-ease) both; }
+.suggestions button { display: flex; align-items: center; gap: .5em; width: 100%; min-height: 2.4em; padding: .3em .6em; border: 0; border-radius: .5em; background: none; text-align: left; font-weight: 700; font-size: .95em; }
+.suggestions button:hover { background: var(--color-primary-soft); }
+.suggestions svg { color: var(--color-text-muted); flex: 0 0 auto; }
+
+/* Tus viajes */
+.saved-trips { display: grid; gap: .4em; animation: pop-in 260ms var(--p-ease) both; }
+.trip-card { display: flex; align-items: center; gap: .6em; padding: .65em .7em; border: 1px solid var(--color-border); border-radius: .9em; background: #fff; }
+.trip-icon { display: grid; place-items: center; flex: 0 0 auto; width: 1.9em; height: 1.9em; border-radius: .55em; background: var(--color-primary-soft); color: var(--color-primary-dark); }
+.trip-text { display: grid; flex: 1; min-width: 0; font-size: .85em; }
+.trip-text span { color: var(--color-text-muted); font-weight: 600; }
+
+/* Tarjetas de ruta, una debajo de la otra, que se despliegan ahí mismo */
+.results { display: grid; gap: .55em; animation: pop-in 260ms var(--p-ease) both; }
+.route-card { border: 2px solid var(--color-border); border-radius: 1em; background: #fff; overflow: hidden; transition: border-color 150ms ease; }
+.route-card.is-open { border-color: var(--color-primary); }
+.route-summary { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .15em .5em; width: 100%; padding: .65em 2.2em .65em .8em; border: 0; background: none; text-align: left; }
+.route-name { font-weight: 900; font-size: 1em; }
+.route-tag { color: var(--color-primary); }
+.is-b .route-tag { color: #8A4512; }
+.route-duration { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-weight: 700; color: var(--color-text-muted); }
+.route-duration strong { font-size: 1.8em; color: var(--color-text); font-weight: 900; }
+.route-facts { display: flex; flex-wrap: wrap; gap: .2em .8em; font-size: .85em; font-weight: 700; }
+.route-facts span { display: inline-flex; align-items: center; gap: .3em; }
+.route-facts svg { color: var(--color-primary); }
+.is-b .route-facts svg { color: var(--color-route-b); }
+.route-chevron { position: absolute; right: .7em; top: 50%; translate: 0 -50%; color: var(--color-text-muted); transition: rotate 200ms ease; }
+.is-open .route-chevron { rotate: 180deg; }
+.route-detail { display: grid; gap: .5em; padding: 0 .8em .8em; border-top: 1px solid var(--color-border); animation: pop-in 220ms var(--p-ease) both; }
+.steps { display: grid; margin: 0; padding: 0; list-style: none; }
+.step { display: flex; align-items: flex-start; gap: .6em; padding: .45em 0; border-bottom: 1px solid var(--color-border); }
+.step:last-child { border-bottom: 0; }
+.step-icon { display: grid; place-items: center; flex: 0 0 auto; width: 1.8em; height: 1.8em; border-radius: 50%; background: var(--color-primary-soft); color: var(--color-primary-dark); }
+.step.is-caminar .step-icon { background: #EDF1EF; color: var(--p-walk); }
+.step.is-transbordo .step-icon { background: #F6E7DA; color: #7A3E10; }
+.step-text { display: grid; font-size: .9em; }
+.step-text span { color: var(--color-text-muted); font-size: .9em; font-weight: 600; }
+.chosen-badge { display: inline-flex; align-items: center; gap: .25em; margin-left: .4em; padding: .1em .5em; border-radius: 999px; background: var(--color-primary); color: #fff; font-size: .75em; font-weight: 800; vertical-align: middle; }
+
+/* Guardar viaje */
+.save-box { display: grid; gap: .55em; padding: .9em; border: 2px solid var(--color-primary); border-radius: 1em; background: #fff; animation: pop-in 260ms var(--p-ease) both; }
+.save-route { margin: 0; font-size: .85em; font-weight: 700; color: var(--color-text-muted); }
+.day-chips { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .3em; }
+.day-chip { min-height: 2.3em; padding: 0; border: 2px solid var(--color-border); border-radius: .6em; background: #fff; font-weight: 800; font-size: .95em; color: var(--color-text-muted); transition: background 150ms ease, color 150ms ease; }
+.day-chip[aria-pressed=true] { border-color: var(--color-primary); background: var(--color-primary); color: #fff; }
+
+/* Mensaje breve que desaparece solo */
+.toast { position: absolute; z-index: 8; left: 50%; bottom: 5.6em; display: flex; align-items: center; gap: .4em; margin: 0; padding: .55em 1em; translate: -50% 0; border-radius: 999px; background: var(--color-primary-dark); color: #fff; font-weight: 800; box-shadow: 0 8px 20px rgba(0, 0, 0, .25); animation: toast 2200ms ease both; white-space: nowrap; }
+@keyframes toast { 0% { opacity: 0; transform: translateY(10px); } 12%, 85% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+
+/* Calcular viaje */
+.time-label { display: grid; gap: .35em; font-weight: 800; font-size: 1.05em; }
+.time-input { width: 100%; min-height: 2.4em; padding: .2em .6em; border: 2px solid var(--color-border); border-radius: .8em; background: #fff; color: var(--color-text); font-size: 1.5em; font-weight: 800; text-align: left; font-variant-numeric: tabular-nums; }
+.time-input:focus { border-color: var(--color-primary); outline: none; }
+.result { display: grid; gap: .45em; padding: .9em; border-radius: 1em; background: var(--color-primary-soft); animation: pop-in 280ms var(--p-ease) both; }
+.result-time { margin: 0; font-size: 1.2em; font-weight: 700; line-height: 1.1; }
+.result-time strong { display: block; font-size: 2.1em; font-weight: 900; color: var(--color-primary-dark); }
+.result-sub { margin: 0; font-size: .85em; font-weight: 700; color: var(--color-text-muted); }
+.mini-steps { display: grid; gap: .3em; margin: .1em 0 0; padding: 0; list-style: none; font-size: .85em; font-weight: 600; }
+.mini-steps li { display: flex; align-items: center; gap: .45em; }
+.mini-steps svg { flex: 0 0 auto; color: var(--color-primary-dark); }
+.mini-steps span { margin-left: auto; color: var(--color-text-muted); white-space: nowrap; }
+.estimate-note { margin: .2em 0 0; padding-top: .5em; border-top: 1px solid rgba(23, 60, 50, .15); font-size: .78em; font-weight: 700; color: #4A3800; }
+
+/* Avisos: tarjetas con aspecto de notificación */
+.notif-list { display: grid; gap: .55em; margin: 0; padding: 0; list-style: none; }
+.notification, .banner { display: grid; gap: .2em; width: 100%; padding: .7em .8em; border: 1px solid var(--color-border); border-radius: 1em; background: #fff; color: var(--color-text); text-align: left; box-shadow: var(--shadow-floating); }
+.notification.is-tappable { border-color: var(--p-danger); }
+.notif-head { display: flex; align-items: center; gap: .4em; font-size: .78em; color: var(--color-text-muted); }
+.notif-app { display: grid; place-items: center; width: 1.5em; height: 1.5em; border-radius: .4em; background: var(--color-primary); color: #fff; }
+.notif-appname { flex: 1; font-weight: 700; }
+.notif-title { font-size: .98em; }
+.notif-body { font-size: .88em; font-weight: 500; line-height: 1.3; }
+.banner { position: absolute; z-index: 9; top: .6em; left: .6em; right: .6em; width: auto; border: 0; box-shadow: 0 14px 34px rgba(0, 0, 0, .35); animation: banner-in 360ms var(--p-ease) both; }
+@keyframes banner-in { from { opacity: 0; transform: translateY(-130%); } to { opacity: 1; transform: none; } }
+
+/* Vista del aviso de cierre */
+.danger-chip { display: flex; align-items: center; gap: .4em; margin: 0; padding: .45em .7em; border-radius: .7em; background: var(--p-danger-soft); color: var(--p-danger); font-weight: 800; font-size: .9em; }
+.schematic { display: block; width: 100%; height: auto; overflow: visible; }
+.sch-place { font-size: 14px; font-weight: 800; fill: var(--color-text); }
+.sch-seg { font-size: 13.5px; font-weight: 700; fill: var(--color-text-muted); }
+.sch-seg-danger { fill: var(--p-danger); font-weight: 800; }
+.sch-seg-faded { fill: var(--p-faded); }
+.sch-seg-alt { fill: var(--color-primary); font-size: 14.5px; font-weight: 800; }
+.sch-pin { font-size: 11px; font-weight: 800; fill: #fff; }
+.alt-text { margin: 0; font-size: .9em; font-weight: 700; }
+.leave-callout { margin: 0; padding: .8em; border-radius: .9em; background: var(--color-primary-dark); color: #fff; font-size: 1.1em; font-weight: 700; line-height: 1.3; }
+.leave-callout strong { font-size: 1.25em; color: #9FE2BF; white-space: nowrap; }
+.place-input:focus-visible, .time-input:focus-visible { outline: none; }
+.time-input:focus-visible { box-shadow: 0 0 0 3px var(--color-primary-soft); }
+.banner { top: 3.4em; }
