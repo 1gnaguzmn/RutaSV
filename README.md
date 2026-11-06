@@ -1,6 +1,6 @@
 # RutaSV
 
-Demo web móvil para explorar rutas de buses y paradas de San Salvador y el AMSS. React, TypeScript, Vite y MapLibre GL JS, sin backend ni autenticación.
+Demo web móvil de un asistente de viaje para San Salvador y el AMSS. La versión 0.2 combina exploración de rutas con tres viajes preparados, instrucciones paso a paso, recomendaciones de salida y avisos simulados para rutinas locales. React, TypeScript, Vite y MapLibre GL JS, sin backend ni autenticación.
 
 ## Ejecutar el frontend
 
@@ -13,6 +13,10 @@ npm run dev
 ```
 
 Abrir la dirección que indique Vite. El mapa base requiere conexión; las rutas y paradas se cargan desde archivos locales. El alcance y la interfaz se documentan en [frontend/README.md](frontend/README.md).
+
+El frontend escucha en la LAN por el puerto **5173**. Para probarlo en un teléfono iOS o Android conectado al mismo router, seguir la [guía de acceso LAN y firewall](frontend/LAN_TESTING.md).
+
+Para presentar la demo, abrir **Planificar** y seguir las vistas **Lugares → Opciones → Plan de salida**. Elegir Casa sur → Universidad, revisar la alternativa recomendada y simular sus pasos o guardar una rutina. Volver conserva los datos; cancelar cierra el plan. Al completar el tercer viaje (dos vienen en el historial de prueba), se ofrece guardar una rutina con aceptación explícita. En **Menú → Controles de demo**, reiniciar conservando rutinas y elegir tráfico, cierre o cambio de recorrido para consultar un aviso accionable. El reloj comienza el lunes a las 05:45 de El Salvador; solo avanza con los controles o los pasos del viaje. Todos los tiempos, caminatas, secuencias e incidentes añadidos son simulados. Consultar la [guía de navegación](frontend/USER_GUIDE.md).
 
 ## Estructura
 
@@ -34,7 +38,7 @@ ESLint tiene una incompatibilidad conocida con TypeScript 7. El build puede adve
 
 ## Preparación de datos
 
-La demo incluye seis rutas, 14 trazados y 207 registros de paradas. Su procedencia es VMT / ArcGIS, con edición declarada de 2022 y estado sin verificación de campo. Las condiciones de reutilización se documentan como no especificadas.
+La demo incluye cuatro rutas, 10 trazados y 207 registros de paradas. Su procedencia es VMT / ArcGIS, con edición declarada de 2022 y estado sin verificación de campo. Las condiciones de reutilización se documentan como no especificadas.
 
 Python solo es necesario para trabajar con el importador. Desde la raíz, con Python 3.12:
 

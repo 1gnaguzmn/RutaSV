@@ -4,6 +4,7 @@ import { Icon } from '../ui/Icon'
 import './BottomSheet.css'
 
 interface Props {
+  journey?: boolean
   expanded: boolean
   desktop: boolean
   title: string
@@ -15,21 +16,23 @@ interface Props {
   children: ReactNode
 }
 
-export function BottomSheet({ expanded, desktop, title, summary, focusKey, panelRef, onToggle, onBack, children }: Props) {
+export function BottomSheet({ journey = false, expanded, desktop, title, summary, focusKey, panelRef, onToggle, onBack, children }: Props) {
   const heading = useRef<HTMLHeadingElement>(null)
+  const content = useRef<HTMLDivElement>(null)
   const previousKey = useRef(focusKey)
   useEffect(() => {
     if (previousKey.current !== focusKey) {
       heading.current?.focus({ preventScroll: true })
+      if (content.current) content.current.scrollTop = 0
       previousKey.current = focusKey
     }
   }, [focusKey])
-  return <aside ref={panelRef} className={`bottom-sheet ${expanded ? 'is-expanded' : ''}`} aria-labelledby="context-title">
+  return <aside ref={panelRef} className={`bottom-sheet ${expanded ? 'is-expanded' : ''} ${journey ? 'is-journey' : ''}`} aria-labelledby="context-title">
     <div className="sheet-heading">
       {onBack && <button type="button" className="icon-button" aria-label="Volver" onClick={onBack}><Icon name="arrow" /></button>}
       <div className="sheet-heading-text"><h2 ref={heading} id="context-title" tabIndex={-1}>{title}</h2><p>{summary}</p></div>
       <button type="button" className="icon-button sheet-toggle" aria-label={expanded ? 'Contraer panel' : 'Expandir panel'} aria-expanded={expanded} aria-controls="context-content" onClick={onToggle}><Icon name="chevron" /></button>
     </div>
-    <div id="context-content" className="sheet-content" hidden={!expanded && !desktop}>{children}</div>
+    <div ref={content} id="context-content" className="sheet-content" hidden={!expanded && !desktop}>{children}</div>
   </aside>
 }

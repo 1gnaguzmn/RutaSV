@@ -48,7 +48,7 @@ test('la paginación respeta bloques de 50 y limita índices sin afectar selecci
 
 test('el contexto sin agrupar contiene únicamente las paradas del trazado o la ficha individual', () => {
   const { routes, stops } = fixture()
-  const counts: Record<string, number[]> = { AB008A0SS: [14, 17], MB030A0: [34, 33], AB029G0: [34, 32], AB101A2E: [0, 0], MB044X0: [0, 0], AB002C0: [26, 17] }
+  const counts: Record<string, number[]> = { AB008A0SS: [14, 17], MB030A0: [34, 33], AB029G0: [34, 32], AB002C0: [26, 17] }
   assert.deepEqual(contextStops(routes.features, stops.features, null, null), [])
   for (const route of routes.features) {
     const result = contextStops(routes.features, stops.features, route.properties.id, null)

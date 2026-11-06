@@ -2,6 +2,8 @@
   --color-primary: #176B4D;
   --color-primary-dark: #173C32;
   --color-primary-soft: #DDEFE4;
+  --color-journey-origin: #176B4D;
+  --color-journey-destination: #C43D35;
   --color-surface: #FFFFFF;
   --color-background: #F8FAF9;
   --color-text: #173C32;
@@ -13,8 +15,6 @@
   --color-route-8a: #2563EB;
   --color-route-30a: #B45309;
   --color-route-29g: #7C3AED;
-  --color-route-101a: #BE185D;
-  --color-route-44: #0E7490;
   --color-route-2c: #475569;
   --color-error: #9F2641;
   --color-error-soft: #FFF0F2;

@@ -8,13 +8,13 @@ import { initialSelection } from '../src/features/routes/selection.ts'
 const read = (name: string, extension = 'geojson'): unknown => JSON.parse(readFileSync(new URL(`../public/data/transit/${name}.${extension}`, import.meta.url), 'utf8'))
 const fixture = () => parseTransitData(read('routes'), read('stops'))
 
-test('el catálogo contiene seis rutas, catorce trazados y 207 registros de paradas', () => {
+test('el catálogo contiene cuatro rutas, diez trazados y 207 registros de paradas', () => {
   const data = fixture()
   const catalog = read('catalog', 'json') as { counts: { routes: number; shapes: number; stops: number } }
-  assert.deepEqual(catalog.counts, { routes: 6, shapes: 14, stops: 207 })
+  assert.deepEqual(catalog.counts, { routes: 4, shapes: 10, stops: 207 })
   const groups = groupRoutes(data.routes.features)
-  assert.equal(groups.length, 6)
-  assert.equal(data.routes.features.length, 14)
+  assert.equal(groups.length, 4)
+  assert.equal(data.routes.features.length, 10)
   assert.equal(data.stops.features.length, 207)
   assert.equal(groups.reduce((sum, group) => sum + getGroupStops(group, data.stops.features).length, 0), 207)
   assert(data.routes.features.every((route) => route.properties.stop_ids.length === 0))
@@ -26,13 +26,15 @@ test('el catálogo contiene seis rutas, catorce trazados y 207 registros de para
   }
 })
 
-test('las cinco rutas nuevas se encuentran por nombre normalizado y código exacto', () => {
+test('las rutas activas se encuentran por nombre y código; 44 y 101A quedan fuera', () => {
   const routes = fixture().routes.features
+  for (const query of ['44', 'MB044X0', '101A', 'AB101A2E']) {
+    assert.equal(groupRoutes(filterRoutes(routes, query)).length, 0, query)
+  }
   for (const [queries, code] of [
+    [['8-A', '8A', 'AB008A0SS'], 'AB008A0SS'],
     [['30A', '30 A', 'MB030A0'], 'MB030A0'],
     [['29G', 'AB029G0'], 'AB029G0'],
-    [['101A', 'AB101A2E'], 'AB101A2E'],
-    [['44', 'MB044X0'], 'MB044X0'],
     [['2-C', '2C', '2 C', 'AB002C0'], 'AB002C0'],
   ] as const) {
     for (const query of queries) {
@@ -45,7 +47,7 @@ test('las cinco rutas nuevas se encuentran por nombre normalizado y código exac
 
 test('cada sentido muestra sus paradas sin mezclar rutas ni numerar viajes', () => {
   const { routes, stops } = fixture()
-  const expected: Record<string, number[]> = { AB008A0SS: [14, 17], MB030A0: [34, 33], AB029G0: [34, 32], AB101A2E: [0, 0], MB044X0: [0, 0], AB002C0: [26, 17] }
+  const expected: Record<string, number[]> = { AB008A0SS: [14, 17], MB030A0: [34, 33], AB029G0: [34, 32], AB002C0: [26, 17] }
   for (const route of routes.features) {
     const related = getRouteStops(route, stops.features)
     const p = route.properties
@@ -67,7 +69,7 @@ test('2-C conserva cuatro trazados distinguibles sin duplicar sus 43 registros',
 
 test('multipartes se conservan y todos sus vértices participan en el encuadre', () => {
   const multipart = fixture().routes.features.filter((route) => route.geometry.type === 'MultiLineString')
-  assert.equal(multipart.length, 4)
+  assert.equal(multipart.length, 1)
   for (const route of multipart) {
     assert.equal(route.geometry.type, 'MultiLineString')
     if (route.geometry.type !== 'MultiLineString') continue

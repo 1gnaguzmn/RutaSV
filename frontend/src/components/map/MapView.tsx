@@ -3,6 +3,9 @@ import { AttributionControl, LngLatBounds, Map, Marker, setWorkerUrl } from 'map
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import type { MapInsets, TransitData } from '../../types/transit'
+import type { MapScene } from '../../types/journey'
+import { geometryParts } from '../../features/journeys/geometry'
+import { JourneyLayer } from './JourneyLayer'
 import { routePositions } from '../../features/routes/routeData'
 import { RouteLayer } from './RouteLayer'
 import { StopLayer } from './StopLayer'
@@ -14,6 +17,7 @@ setWorkerUrl(workerUrl)
 const STYLE = 'https://tiles.openfreemap.org/styles/liberty'
 
 interface Props {
+  scene: MapScene
   data: TransitData | null
   routeId: string | null
   stopId: string | null
@@ -27,6 +31,14 @@ interface Props {
 
 interface CameraSnapshot { center: [number, number]; zoom: number }
 
+// Leave room above the coordinate for the endpoint pin and its label.
+function framePadding(insets: MapInsets, width: number, height: number, itinerary: boolean): MapInsets {
+  if (!itinerary) return insets
+  const horizontal = Math.min(28, Math.max(0, (width - insets.left - insets.right - 48) / 2))
+  return { ...insets, left: insets.left + horizontal, right: insets.right + horizontal,
+    top: Math.min(insets.top + 52, Math.max(insets.top, height - insets.bottom - 48)) }
+}
+
 export function MapView(props: Props) {
   const [attempt, setAttempt] = useState(0)
   const [camera, setCamera] = useState<CameraSnapshot>({ center: MAP_INITIAL_CENTER, zoom: MAP_INITIAL_ZOOM })
@@ -36,7 +48,7 @@ export function MapView(props: Props) {
   }} />
 }
 
-function MapSession({ data, routeId, stopId, frameRequest, interactionRevision, insets, onRoute, onStop, onGroup, initialCamera, onRetry }: Props & { initialCamera: CameraSnapshot; onRetry: (snapshot: CameraSnapshot) => void }) {
+function MapSession({ data, scene, routeId, stopId, frameRequest, interactionRevision, insets, onRoute, onStop, onGroup, initialCamera, onRetry }: Props & { initialCamera: CameraSnapshot; onRetry: (snapshot: CameraSnapshot) => void }) {
   const container = useRef<HTMLDivElement>(null)
   const instance = useRef<Map | null>(null)
   const locationMarker = useRef<Marker | null>(null)
@@ -99,9 +111,10 @@ function MapSession({ data, routeId, stopId, frameRequest, interactionRevision, 
     if (!map) return
     const features = data?.routes.features.filter((route) => route.properties.id === routeId) ?? []
     const bounds = new LngLatBounds()
+    if (scene.mode === 'itinerary') scene.itinerary.legs.forEach((leg) => geometryParts(leg.geometry).forEach((part) => part.forEach(([lng, lat]) => bounds.extend([lng, lat]))))
     features.forEach((route) => routePositions(route).forEach(([lng, lat]) => bounds.extend([lng, lat])))
     if (bounds.isEmpty()) map.jumpTo({ center: MAP_INITIAL_CENTER, zoom: MAP_INITIAL_ZOOM, padding: { top: 0, bottom: 0, left: 0, right: 0 } })
-    else map.fitBounds(bounds, { padding: padding.current, maxZoom: 14.5, duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200 })
+    else map.fitBounds(bounds, { padding: framePadding(padding.current, map.getContainer().clientWidth, map.getContainer().clientHeight, scene.mode === 'itinerary'), maxZoom: 14.5, duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200 })
   }
 
   // Reencuadrar al seleccionar o cambiar el viewport; plegar el panel conserva la cámara.
@@ -109,20 +122,23 @@ function MapSession({ data, routeId, stopId, frameRequest, interactionRevision, 
     if (!map || !data) return
     const requested = frameRequest !== lastFrame.current
     const resized = viewportRevision !== lastViewport.current
-    if (!requested && (!resized || !routeId)) return
-    const task = requestAnimationFrame(() => {
+    if (!requested && (!resized || (!routeId && scene.mode !== 'itinerary'))) return
+    let settled = 0
+    const task = requestAnimationFrame(() => { settled = requestAnimationFrame(() => {
       lastFrame.current = frameRequest
       lastViewport.current = viewportRevision
       const routes = data.routes.features.filter((route) => route.properties.id === routeId)
       const bounds = new LngLatBounds()
+      if (scene.mode === 'itinerary') scene.itinerary.legs.forEach((leg) => geometryParts(leg.geometry).forEach((part) => part.forEach(([lng, lat]) => bounds.extend([lng, lat]))))
       routes.forEach((route) => routePositions(route).forEach(([lng, lat]) => bounds.extend([lng, lat])))
-      if (!bounds.isEmpty()) map.fitBounds(bounds, { padding: padding.current, maxZoom: 14.5, duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200 })
-    })
-    return () => cancelAnimationFrame(task)
-  }, [map, data, routeId, frameRequest, viewportRevision])
+      if (!bounds.isEmpty()) map.fitBounds(bounds, { padding: framePadding(padding.current, map.getContainer().clientWidth, map.getContainer().clientHeight, scene.mode === 'itinerary'), maxZoom: 14.5, duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200 })
+    }) })
+    return () => { cancelAnimationFrame(task); cancelAnimationFrame(settled) }
+  }, [map, data, routeId, scene, frameRequest, viewportRevision])
 
   const locate = () => {
     if (!map) return
+    if (!window.isSecureContext) { setNotice('Para usar tu ubicación desde el teléfono, abre la demo con HTTPS y un certificado de confianza. Puedes seguir explorando y simulando viajes por la red local.'); return }
     if (!navigator.geolocation) { setNotice('Tu navegador no admite geolocalización. Puedes seguir explorando las rutas.'); return }
     setLocating(true)
     setNotice('Buscando tu ubicación…')
@@ -152,8 +168,9 @@ function MapSession({ data, routeId, stopId, frameRequest, interactionRevision, 
 
   return <>
     <div ref={container} className="map-canvas" />
-    {ready && map && data && <><RouteLayer map={map} data={data} selectedId={routeId} onSelect={onRoute} /><StopLayer map={map} data={data} routeId={routeId} selectedId={stopId} interactionRevision={interactionRevision} insets={insets} onSelect={onStop} onGroup={onGroup} onError={reportGroupIssue} /></>}
-    <MapControls map={map} hasRoute={Boolean(routeId)} onFrame={frame} onLocate={locate} locating={locating} />
+    {ready && map && data && scene.mode === 'explore' && <><RouteLayer map={map} data={data} selectedId={routeId} onSelect={onRoute} /><StopLayer map={map} data={data} routeId={routeId} selectedId={stopId} interactionRevision={interactionRevision} insets={insets} onSelect={onStop} onGroup={onGroup} onError={reportGroupIssue} /></>}
+    {ready && map && scene.mode === 'itinerary' && <JourneyLayer map={map} itinerary={scene.itinerary} activeLeg={scene.activeLeg} />}
+    <MapControls map={map} hasRoute={Boolean(routeId) || scene.mode === 'itinerary'} onFrame={frame} onLocate={locate} locating={locating} />
     <div className="map-messages">
       {!ready && !error && <p className="map-status" role="status">Cargando mapa…</p>}
       {error && <div className="map-status map-error" role="alert"><p>{error}</p><button type="button" onClick={retry}>Reintentar mapa</button><button type="button" onClick={() => setError(null)}>Ocultar aviso</button></div>}

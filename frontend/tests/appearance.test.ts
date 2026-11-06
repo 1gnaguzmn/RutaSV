@@ -17,10 +17,10 @@ const token = (name: string): string => {
   return value.toUpperCase()
 }
 
-test('las seis rutas tienen colores distintos en sus tarjetas y reservan el verde para selección', () => {
+test('las cuatro rutas tienen colores distintos en sus tarjetas y reservan el verde para selección', () => {
   const expected: Record<string, string> = {
     AB008A0SS: '#2563EB', MB030A0: '#B45309', AB029G0: '#7C3AED',
-    AB101A2E: '#BE185D', MB044X0: '#0E7490', AB002C0: '#475569',
+    AB002C0: '#475569',
   }
   const data = fixture()
   const colors = new Set<string>()
@@ -32,11 +32,11 @@ test('las seis rutas tienen colores distintos en sus tarjetas y reservan el verd
     assert(cardCss.includes(`.route-code--${appearance.key} { color: var(${appearance.colorToken}); }`))
     colors.add(color)
   }
-  assert.equal(colors.size, 6)
+  assert.equal(colors.size, 4)
   assert(!colors.has(token('--color-primary')), 'Reservar verde para selección')
 })
 
-test('los 14 trazados mantienen el color de su ruta aunque cambie el orden de carga', () => {
+test('los 10 trazados mantienen el color de su ruta aunque cambie el orden de carga', () => {
   const routes = fixture().routes.features
   const styles = new Map(routes.map((route) => [route.properties.id, getRouteAppearance(route.properties)]))
   for (const route of routes.reverse()) assert.deepEqual(getRouteAppearance(route.properties), styles.get(route.properties.id))

@@ -2,20 +2,18 @@
 
 Importación local y de solo lectura desde ArcGIS. El importador individual conserva las capturas originales y los procesados; un segundo comando prepara una copia estática para el frontend. No escribe una base de datos ni despliega resultados. Los registros importados son datos de una fuente externa **sin verificación de campo**; no son recorridos ficticios.
 
-## Catálogo de la demo: seis rutas
+## Catálogo de la demo: cuatro rutas
 
-`demo_routes.json` declara los nombres de presentación, códigos exactos y la correspondencia de demo `I→01 / R→02`. `demo_sources.json` fija una salida procesada por código: conserva la instantánea de la 8-A y añade cinco capturas independientes. Los identificadores UTC de algunas capturas comienzan por `20261030`; se hicieron el 29 de octubre por la tarde en El Salvador.
+`demo_routes.json` declara los nombres de presentación, códigos exactos y la correspondencia de demo `I→01 / R→02`. `demo_sources.json` fija una salida procesada por código: conserva las seis capturas históricas. Solo se exportan los cuatro códigos activos de `demo_routes.json`. Los identificadores UTC de algunas capturas comienzan por `20261030`; se hicieron el 29 de octubre por la tarde en El Salvador.
 
 | Ruta | Código exacto | Trazados | Registros de paradas I / R |
 |---|---|---:|---:|
 | 8-A | `AB008A0SS` | 2 | 14 / 17 |
 | 30A | `MB030A0` | 2 | 34 / 33 |
 | 29G | `AB029G0` | 2 | 34 / 32 |
-| 101A | `AB101A2E` | 2 | 0 / 0 |
-| 44 | `MB044X0` | 2 | 0 / 0 |
 | 2-C | `AB002C0` | 4 | 26 / 17 |
 
-Total: **6 rutas, 14 trazados y 207 registros**, sin fusionar puntos coincidentes. Los códigos son coincidencias exactas; no se amplían por prefijo ni se aplica una delimitación automática del AMSS.
+Total: **4 rutas, 10 trazados y 207 registros**, sin fusionar puntos coincidentes. Los códigos son coincidencias exactas; no se amplían por prefijo ni se aplica una delimitación automática del AMSS.
 
 ```powershell
 # Descargar solo rutas nuevas del catálogo; conservar progreso si falla una posterior.
@@ -34,8 +32,8 @@ Para añadir otra ruta, agregar `{ "code": "CODIGO_EXACTO", "short_name": "NOMBR
 
 Particularidades conservadas de la fuente:
 
-- **30A, 101A y 44** incluyen cuatro registros multipartitos en total. La nueva preparación activa `allow_multipart` y exporta `MultiLineString`, manteniendo cada parte separada y sin añadir conexiones. Los procesados iniciales que los rechazaban también se conservan; las salidas ampliadas usan el sufijo `-multipart`.
-- **101A y 44** no tienen registros de paradas en la capa consultada. Eso no significa que operen sin paradas; el frontend muestra el trazado y un aviso de ausencia de datos.
+- **30A** incluye un trazado multipartito. La nueva preparación activa `allow_multipart` y exporta `MultiLineString`, manteniendo cada parte separada y sin añadir conexiones. Los procesados iniciales que los rechazaban también se conservan; las salidas ampliadas usan el sufijo `-multipart`.
+- **101A y 44** se retiraron de la demo porque la fuente no incluye sus paradas. Se conservan sus capturas, procesados y referencias en `demo_sources.json`; ya no forman parte de los GeoJSON públicos ni de las búsquedas.
 - **2-C** tiene dos registros 01 y dos 02. Se conservan los cuatro GlobalID y sus geometrías; las etiquetas añaden el OBJECTID para distinguirlos. Las paradas `I` se vinculan a ambos 01 y las `R` a ambos 02 mediante `shape_ids`. No se adjudica una variante única ni se duplican registros de paradas. El panel explica esta ambigüedad.
 - Los nombres solicitados (`30A`, `2-C`) son etiquetas de presentación. `source_attributes.NAME` y `long_name` conservan los nombres publicados (`30 A`, `2C`). `stop_ids` queda vacío, la lista es alfabética y la asociación de visualización sigue identificada como `demo_direction_mapping`.
 
@@ -166,7 +164,7 @@ Para ver los hallazgos del piloto ejecutado, consultar `PILOT_REPORT.md` y el `q
 
 ## Preparación histórica del piloto individual
 
-La 8-A utiliza la instantánea `20261029T224448147697Z` como referencia. Su preparación individual sigue disponible, aunque el frontend carga ahora el catálogo de seis rutas:
+La 8-A utiliza la instantánea `20261029T224448147697Z` como referencia. Su preparación individual sigue disponible, aunque el frontend carga ahora el catálogo de cuatro rutas:
 
 ```powershell
 .\data\.venv\Scripts\python.exe data/scripts/prepare_pilot_demo.py

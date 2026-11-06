@@ -1,0 +1,85 @@
+.stack { display: grid; gap: var(--space-3); }
+.journey-phase { display: flex; flex-direction: column; gap: var(--space-4); min-height: 100%; }
+.places-mode { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-1); padding: var(--space-1); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.places-mode button { padding: var(--space-2); border: 0; border-radius: var(--radius-sm); font-size: .875rem; }
+.places-mode button[aria-pressed=true] { background: var(--color-primary-soft); color: var(--color-primary-dark); font-weight: 700; }
+.journey-flow-actions { position: sticky; bottom: calc(-1 * var(--space-6)); z-index: 1; display: grid; gap: var(--space-2); margin-top: auto; padding-block: var(--space-3); border-top: 1px solid var(--color-border); background: var(--color-surface); }
+.journey-flow-actions:empty { display: none; }
+.journey-flow-navigation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); }
+.journey-flow-navigation .text-button { text-align: center; }
+.journey-route-summary { margin: 0; font-weight: 600; }
+.selected-journey { display: grid; gap: var(--space-1); margin: 0; }
+.selected-journey span { color: var(--color-text-muted); font-size: .875rem; }
+.example-trip-button { display: grid; gap: var(--space-1); padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); text-align: left; }
+.example-trip-button span { color: var(--color-primary); font-size: .875rem; }
+.journey-supporting-details summary { font-size: .875rem; }
+.journey-departure .recommendation { margin: 0; }
+.journey-options .journey-card { gap: var(--space-1); padding: var(--space-3); font-size: .875rem; }
+.journey-options .journey-card[aria-pressed=true] { padding: calc(var(--space-3) - 1px); }
+.journey-progress { display: flex; flex-direction: column; gap: var(--space-3); min-height: 100%; }
+.journey-form, .journey-form fieldset, .demo-controls fieldset { display: grid; gap: var(--space-3); }
+.journey-form fieldset, .demo-controls fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.journey-form label, .sort-label, .demo-controls label { display: grid; gap: var(--space-1); font-size: .875rem; font-weight: 600; }
+.journey-form input, select { width: 100%; min-width: 0; min-height: 44px; padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm); color: var(--color-text); background: var(--color-surface); }
+.form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.secondary-button { padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+.secondary-button:hover { border-color: var(--color-primary); background: var(--color-primary-soft); }
+.text-button { padding: var(--space-2); border: 0; border-radius: var(--radius-sm); color: var(--color-primary); text-align: left; font-weight: 600; }
+.journey-card { display: grid; gap: var(--space-2); width: 100%; text-align: left; padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); }
+.journey-card[aria-pressed=true] { border: 2px solid var(--color-primary); padding: calc(var(--space-4) - 1px); background: var(--color-primary-soft); }
+.journey-card-top { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: space-between; }
+.card-status, .eyebrow { color: var(--color-primary); font-size: .875rem; font-weight: 600; }
+.sort-label { margin-bottom: var(--space-3); }
+.recommendation, .habit-suggestion, .step-instruction, .next-stop { margin: var(--space-4) 0; padding: var(--space-4); border-radius: var(--radius-lg); background: var(--color-primary-soft); }
+.recommendation p { margin: var(--space-2) 0; }
+.departure-time { font-size: 1.6rem; font-weight: 700; }
+.itinerary-legs { padding-left: var(--space-6); }
+.itinerary-legs li { margin-bottom: var(--space-4); }
+.itinerary-legs span { display: block; color: var(--color-text-muted); }
+.demo-controls { padding-block: var(--space-3); margin-block: var(--space-3); border-block: 1px solid var(--color-border); }
+summary { cursor: pointer; min-height: 44px; padding-block: var(--space-3); font-weight: 600; }
+.example-trips { margin-top: var(--space-3); }
+.control-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.control-row > button { flex: 1; }
+.confirmation { padding: var(--space-3); border: 2px solid var(--color-primary); border-radius: var(--radius-md); }
+.day-picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.day-picker legend { margin-bottom: var(--space-2); }
+.journey-form .day-picker label { display: flex; align-items: center; min-height: 44px; gap: var(--space-2); }
+.day-picker input { width: 20px; min-height: 20px; height: 20px; accent-color: var(--color-primary); }
+.table-scroll { overflow-x: auto; }
+.table-scroll table { width: 100%; font-size: .875rem; border-collapse: collapse; }
+.table-scroll th, .table-scroll td { padding: var(--space-2); border-bottom: 1px solid var(--color-border); text-align: left; }
+.journey-progress progress { width: 100%; accent-color: var(--color-primary); }
+.next-stop { border: 2px solid var(--color-primary); font-size: 1.125rem; }
+.in-app-alert { display: grid; gap: var(--space-2); padding: var(--space-3); margin-bottom: var(--space-3); border: 1px solid var(--color-primary); border-radius: var(--radius-md); background: var(--color-primary-soft); }
+.in-app-alert p { margin: 0; }
+.routine-card { padding-block: var(--space-4); border-bottom: 1px solid var(--color-border); }
+.routine-card h3 { margin-top: 0; }
+.journey-menu { position: absolute; z-index: 6; top: 68px; right: 0; width: min(240px, 100%); max-height: calc(100dvh - 88px); overflow-y: auto; display: grid; padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-floating); background: var(--color-surface); }
+.top-overlay:has(.journey-menu:not([hidden])) { z-index: 5; }
+.journey-menu button { text-align: left; padding: var(--space-3); border: 0; border-radius: var(--radius-sm); }
+.journey-menu button[aria-current=page] { background: var(--color-primary-soft); font-weight: 600; }
+.header-actions { display: flex; align-items: center; gap: var(--space-1); }
+.brand p.virtual-time { font-size: .75rem; }
+.simulation-label { color: var(--color-text-muted); font-size: .875rem; margin-top: 0; }
+.journey-location-label { display: inline-flex; align-items: center; gap: var(--space-2); }
+.journey-location-label svg { flex: 0 0 22px; }
+.journey-location-origin svg { color: var(--color-journey-origin); }
+.journey-location-destination svg { color: var(--color-journey-destination); }
+select, summary { font: inherit; }
+select:focus-visible, summary:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
+button:disabled { cursor: default; }
+@media (max-width: 359px) { .brand-mark { width: 32px; height: 32px; } .app-header { padding-inline: var(--space-2); } }
+@media (max-width: 359px) {
+  .journey-places { gap: var(--space-3); }
+  .journey-places .journey-form { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); }
+  .journey-places .journey-flow-actions { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-2); padding-block: var(--space-2); }
+  .journey-places .journey-flow-actions button { padding-inline: var(--space-2); font-size: .875rem; }
+}
+@media (max-height: 480px) and (min-width: 600px) and (max-width: 1023px) {
+  .bottom-sheet.is-journey.is-expanded { height: 78%; }
+  .is-journey .sheet-heading { min-height: 64px; padding-block: var(--space-2); }
+  .journey-places .journey-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .journey-flow-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); padding-block: var(--space-2); }
+  .journey-flow-actions > .stack:has(> button:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

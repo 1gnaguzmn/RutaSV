@@ -28,6 +28,14 @@
 .sheet-content { overflow-y: auto; overscroll-behavior: contain; padding: 0 var(--space-4) var(--space-6); min-height: 0; }
 .sheet-toggle svg { transition: transform 180ms ease; }
 .is-expanded .sheet-toggle svg { transform: rotate(180deg); }
+.is-journey .sheet-content { flex: 1; }
+@media (max-width: 1023px) {
+  .bottom-sheet.is-journey { max-height: calc(100% - max(104px, env(safe-area-inset-top, 0px))); }
+  .bottom-sheet.is-journey.is-expanded { height: 65%; }
+}
+@media (max-width: 359px) {
+  .bottom-sheet.is-journey.is-expanded { height: 58%; }
+}
 @media (max-height: 480px) and (min-width: 600px) and (max-width: 1023px) {
   .bottom-sheet { max-height: 60%; }
 }

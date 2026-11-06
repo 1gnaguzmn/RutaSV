@@ -6,8 +6,6 @@
 .route-code--8a { color: var(--color-route-8a); }
 .route-code--30a { color: var(--color-route-30a); }
 .route-code--29g { color: var(--color-route-29g); }
-.route-code--101a { color: var(--color-route-101a); }
-.route-code--44 { color: var(--color-route-44); }
 .route-code--2c { color: var(--color-route-2c); }
 .route-card-info { min-width: 0; flex: 1; display: grid; gap: var(--space-1); }
 .route-card-info strong { line-height: 1.4; }
