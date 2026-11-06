@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RutaSV · Demo</title>
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --teal: #1F7A8C;
+    --teal-soft: #E4F2F5;
+    --yellow: #F2B705;
+    --red: #C0262D;
+    --gray: #5E6A78;
+    --line: #DCE3EA;
+    --bg: #E9ECEF;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; background: var(--bg); color: var(--navy);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+
+  /* Teléfono */
+  .phone {
+    position: relative; flex: 0 0 auto; width: 390px; height: 780px;
+    display: flex; flex-direction: column; overflow: hidden;
+    border-radius: 44px; background: #fff; font-size: 18px; line-height: 1.35;
+    box-shadow: 0 0 0 12px #121417, 0 30px 60px rgba(0, 0, 0, .28);
+    transform-origin: center;
+  }
+  header { position: relative; flex: 0 0 auto; padding: 26px 20px 16px; background: var(--navy); color: #fff; }
+  header h1 { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -.01em; }
+  header h1 span { color: var(--yellow); }
+  .etiqueta {
+    position: absolute; z-index: 30; top: 28px; right: 16px; padding: 3px 10px;
+    border-radius: 999px; background: var(--yellow); color: var(--navy);
+    font-size: 14px; font-weight: 700;
+  }
+  main { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 18px 18px 26px; scrollbar-width: none; }
+  main::-webkit-scrollbar { display: none; }
+  .panel { display: flex; flex-direction: column; gap: 14px; animation: aparecer 200ms ease both; }
+  .panel[hidden] { display: none; }
+  .sin-anim { animation: none; }
+  @keyframes aparecer { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  h2 { margin: 0; font-size: 22px; font-weight: 800; color: var(--navy); }
+
+  /* Campos */
+  .campo { display: grid; gap: 4px; font-size: 16px; font-weight: 700; color: var(--gray); }
+  .campo input {
+    width: 100%; min-height: 50px; padding: 10px 14px; border: 2px solid var(--line);
+    border-radius: 12px; background: #fff; color: var(--navy); font-size: 18px; font-weight: 600;
+  }
+  .campo input:focus { outline: none; border-color: var(--teal); }
+  .campo input[type="time"] { font-size: 22px; text-align: left; }
+
+  /* Botones */
+  .btn {
+    width: 100%; min-height: 52px; padding: 12px 16px; border: 2px solid var(--teal);
+    border-radius: 14px; background: var(--teal); color: #fff; font-size: 18px; font-weight: 800;
+    transition: background 150ms ease, transform 150ms ease;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn.sec { background: #fff; color: var(--teal); }
+  .btn:focus-visible, .tarjeta-cab:focus-visible, .dia:focus-visible, .tab:focus-visible, .notif-cab:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+  /* Tarjetas de ruta */
+  .tarjeta { border: 2px solid var(--line); border-radius: 16px; background: #fff; overflow: hidden; transition: border-color 150ms ease; }
+  .tarjeta.abierta { border-color: var(--teal); }
+  .tarjeta-cab { display: grid; gap: 4px; width: 100%; padding: 14px 16px; border: 0; background: none; text-align: left; }
+  .tarjeta-cab:disabled { cursor: default; color: inherit; }
+  .tarjeta-cab strong { font-size: 20px; }
+  .tarjeta-cab span { font-size: 16px; color: var(--gray); font-weight: 600; }
+  .detalle { display: grid; gap: 12px; padding: 0 16px 16px; animation: aparecer 200ms ease both; }
+  .pasos { margin: 0; padding: 12px 0 0 26px; border-top: 1px solid var(--line); font-size: 17px; }
+  .pasos li { margin-bottom: 6px; padding: 3px 6px; border-radius: 8px; transition: background 200ms ease, color 200ms ease; }
+  .pasos li::marker { color: var(--teal); font-weight: 800; }
+  .pasos li.activo { background: #FFF4CC; font-weight: 700; }
+
+  /* Mapa esquemático */
+  .mapa { display: block; width: 100%; height: auto; border-radius: 12px; background: #F2F4F1; }
+  .calle { stroke: #fff; stroke-width: 7; }
+  .calle-borde { stroke: #E1E5E0; stroke-width: 9; }
+  .tramo-casing { fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; }
+  .tramo { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .tramo.caminar { stroke: #6B7785; stroke-width: 3.5; stroke-dasharray: 1 7; }
+  .tramo.bus { stroke-width: 7; }
+  .insignia-txt { font-size: 11px; font-weight: 800; fill: #fff; }
+  .pin-txt { font-size: 11px; font-weight: 800; fill: #fff; }
+  .mapa-txt { font-size: 11px; font-weight: 700; fill: var(--navy); }
+  .mapa-txt.rojo { fill: var(--red); }
+
+  /* Guardar viaje */
+  .caja { display: grid; gap: 14px; padding: 16px; border: 2px solid var(--teal); border-radius: 16px; animation: aparecer 200ms ease both; }
+  .dias { display: flex; justify-content: space-between; gap: 4px; }
+  .dia {
+    width: 42px; height: 42px; padding: 0; border: 2px solid var(--line); border-radius: 50%;
+    background: #fff; color: var(--gray); font-size: 17px; font-weight: 800;
+    transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  }
+  .dia.on { border-color: var(--teal); background: var(--teal); color: #fff; }
+  .nota { margin: 0; font-size: 16px; color: var(--gray); }
+
+  /* Tus viajes */
+  .viajes { display: grid; gap: 8px; animation: aparecer 200ms ease both; }
+  .viaje { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; background: var(--teal-soft); }
+  .viaje div { display: grid; flex: 1; gap: 2px; min-width: 0; }
+  .viaje strong { font-size: 17px; }
+  .viaje span { font-size: 16px; color: var(--gray); }
+  .quitar { flex: 0 0 auto; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--gray); font-size: 18px; }
+  .quitar:hover { background: rgba(11, 31, 58, .08); }
+
+  /* Calcular */
+  .resultado {
+    padding: 18px 16px; border-radius: 16px; background: var(--navy); color: var(--yellow);
+    font-size: 30px; font-weight: 800; line-height: 1.15; animation: aparecer 200ms ease both;
+  }
+  .lineas { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 17px; }
+  .lineas li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+
+  /* Rutas */
+  .linea { display: flex; align-items: center; gap: 14px; padding: 14px; border: 2px solid var(--line); border-radius: 16px; }
+  .linea-num { display: grid; place-items: center; flex: 0 0 auto; min-width: 64px; height: 48px; padding: 0 8px; border-radius: 12px; color: #fff; font-size: 20px; font-weight: 800; }
+  .linea div { display: grid; gap: 2px; }
+  .linea strong { font-size: 19px; }
+  .linea span { font-size: 16px; color: var(--gray); }
+  .linea .linea-num { color: #fff; font-size: 20px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .chip { padding: 2px 10px; border-radius: 999px; background: var(--teal-soft); color: var(--navy) !important; font-size: 15px !important; font-weight: 700; }
+
+  /* Avisos */
+  .intro { margin: 0; font-size: 17px; color: var(--gray); }
+  .notif {
+    width: 100%; border: 1px solid var(--line); border-radius: 18px; background: #fff;
+    text-align: left; box-shadow: 0 4px 14px rgba(11, 31, 58, .08); overflow: hidden;
+  }
+  .notif.cierre { border-color: var(--red); }
+  .notif-cab { display: flex; gap: 12px; width: 100%; padding: 12px 14px; border: 0; background: none; text-align: left; }
+  .notif-icono {
+    position: relative; display: grid; place-items: center; flex: 0 0 auto; width: 46px; height: 46px;
+    border-radius: 12px; background: var(--red); color: #fff;
+  }
+  .notif-icono svg { width: 32px; height: 32px; }
+  .excl {
+    position: absolute; top: -6px; right: -6px; display: grid; place-items: center; width: 22px; height: 22px;
+    border: 2px solid #fff; border-radius: 50%; background: var(--yellow); color: var(--navy); font-size: 15px; font-weight: 900;
+  }
+  .notif-cuerpo { display: grid; flex: 1; gap: 2px; min-width: 0; }
+  .notif-arriba { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .notif-arriba strong { font-size: 17px; }
+  .notif-arriba span { flex: 0 0 auto; font-size: 14px; color: var(--gray); }
+  .notif-texto { font-size: 16px; }
+  .chev { flex: 0 0 auto; align-self: center; width: 22px; height: 22px; color: var(--gray); transition: transform 200ms ease; }
+  .notif-cab[aria-expanded="true"] .chev { transform: rotate(180deg); }
+  .notif-detalle { display: grid; gap: 10px; padding: 0 14px 14px; animation: aparecer 200ms ease both; }
+  .notif-detalle[hidden] { display: none; }
+  .fila { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 17px; }
+  .fila .linea-num { min-width: 52px; height: 34px; font-size: 16px; border-radius: 9px; }
+  .fila-icono { display: grid; place-items: center; flex: 0 0 auto; width: 34px; height: 34px; border-radius: 9px; background: var(--teal-soft); color: var(--teal); }
+  .fila-icono svg { width: 22px; height: 22px; }
+  .salida { margin: 0; padding: 12px 14px; border-radius: 12px; background: var(--navy); color: var(--yellow); font-size: 19px; font-weight: 800; }
+
+  /* Barra de pestañas */
+  nav { display: grid; grid-template-columns: repeat(4, 1fr); flex: 0 0 auto; padding: 6px 6px 14px; border-top: 1px solid var(--line); background: #fff; }
+  .tab {
+    display: grid; justify-items: center; gap: 2px; padding: 6px 2px; border: 0; border-radius: 12px;
+    background: none; color: var(--gray); font-size: 13px; font-weight: 700; line-height: 1.15;
+  }
+  .tab svg { width: 26px; height: 26px; }
+  .tab[aria-current="page"] { background: var(--teal-soft); color: var(--teal); }
+
+  /* Mensaje breve */
+  .toast {
+    position: absolute; z-index: 25; left: 50%; bottom: 96px; padding: 10px 20px;
+    border-radius: 999px; background: var(--navy); color: #fff; font-size: 17px; font-weight: 700;
+    white-space: nowrap; transform: translate(-50%, 10px); opacity: 0; pointer-events: none;
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* Notificación que baja */
+  .banner {
+    position: absolute; z-index: 20; top: 86px; left: 10px; right: 10px; width: auto; cursor: pointer;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, .3);
+    transform: translateY(-230%); opacity: 0; pointer-events: none;
+    transition: transform 450ms cubic-bezier(.2, .8, .2, 1), opacity 300ms ease;
+  }
+  .banner.show { transform: none; opacity: 1; pointer-events: auto; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+  <header>
+    <h1>Ruta<span>SV</span></h1>
+    <span class="etiqueta">Datos de ejemplo</span>
+  </header>
+
+  <main id="main">
+    <!-- Buscar -->
+    <section class="panel" id="panel-buscar">
+      <div id="tus-viajes"></div>
+      <label class="campo">Desde<input type="text" id="b-desde" autocomplete="off"></label>
+      <label class="campo">Hasta<input type="text" id="b-hasta" autocomplete="off"></label>
+      <button class="btn" id="btn-buscar" data-accion="buscar">Buscar rutas</button>
+      <div id="resultados" class="panel sin-anim"></div>
+      <div id="guardar"></div>
+    </section>
+
+    <!-- Calcular viaje -->
+    <section class="panel" id="panel-calcular" hidden>
+      <label class="campo">Desde<input type="text" id="c-desde" autocomplete="off"></label>
+      <label class="campo">Hasta<input type="text" id="c-hasta" autocomplete="off"></label>
+      <label class="campo">¿A qué hora quieres llegar?<input type="time" id="c-hora"></label>
+      <button class="btn" data-accion="calcular">Calcular</button>
+      <div id="calculo" class="panel sin-anim"></div>
+    </section>
+
+    <!-- Rutas -->
+    <section class="panel" id="panel-rutas" hidden>
+      <h2>Rutas</h2>
+      <div id="lista-rutas" class="panel sin-anim"></div>
+    </section>
+
+    <!-- Avisos -->
+    <section class="panel" id="panel-avisos" hidden>
+      <p class="intro">Así se verán tus avisos. Estos son ejemplos.</p>
+      <div id="lista-avisos" class="panel sin-anim"></div>
+      <button class="btn" data-accion="ejemplo">Ver ejemplo en pantalla</button>
+    </section>
+  </main>
+
+  <nav aria-label="Secciones">
+    <button class="tab" data-tab="buscar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>Buscar
+    </button>
+    <button class="tab" data-tab="calcular">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Calcular viaje
+    </button>
+    <button class="tab" data-tab="rutas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17V6c0-2 14-2 14 0v11H5Zm0-6h14M8 17v3m8-3v3M8 14h1m6 0h1"/></svg>Rutas
+    </button>
+    <button class="tab" data-tab="avisos">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15L6 16Z"/><path d="M10 21h4"/></svg>Avisos
+    </button>
+  </nav>
+
+  <div class="toast" id="toast" role="status">✓ Viaje guardado</div>
+  <div class="notif cierre banner" id="banner" data-accion="abrir-cierre"></div>
+</div>
+
+<script>
+/* ── Datos editables ─────────────────────────────────────────────────────
+   puntos: coordenadas del mapa esquemático (lienzo de 340 × 190).
+   Cada tramo empieza donde termina el anterior. */
+const DATOS = {
+  origen: "El Salvador del Mundo",
+  destino: "Key Institute",
+  lineas: [
+    { id: "101", nombre: "Ruta 101", variantes: ["A", "B", "C", "D"], color: "#1F7A8C" },
+    { id: "42", nombre: "Ruta 42", variantes: ["B", "C"], color: "#D9661F" },
+    { id: "40-A", nombre: "Ruta 40-A", variantes: [], color: "#7A4FBF" }
+  ],
+  rutas: [
+    { id: "A", nombre: "Más rápida", duracion: 38, caminata: 9, transbordos: 1,
+      pasos: [
+        { texto: "Camina 5 min a la parada [PARADA 1]", tipo: "caminar", puntos: [[30, 150], [70, 150]] },
+        { texto: "Aborda la Ruta 101 (A, B, C o D) · 8 paradas", tipo: "bus", lineas: ["101"], puntos: [[70, 150], [150, 150], [150, 110], [190, 110]] },
+        { texto: "Bájate en [PARADA 2] y toma la Ruta 42 (B o C)", tipo: "bus", lineas: ["42"], puntos: [[190, 110], [230, 110], [230, 70], [270, 70]] },
+        { texto: "Camina 4 min hasta Key Institute", tipo: "caminar", puntos: [[270, 70], [270, 30], [310, 30]] }
+      ] },
+    { id: "B", nombre: "Menos caminata", duracion: 45, caminata: 3, transbordos: 0,
+      pasos: [
+        { texto: "Camina 2 min a la parada [PARADA 1]", tipo: "caminar", puntos: [[30, 150], [30, 110]] },
+        { texto: "Aborda la Ruta 42 o la Ruta 40-A · 14 paradas", tipo: "bus", lineas: ["42", "40-A"], puntos: [[30, 110], [110, 110], [110, 70], [190, 70], [190, 30], [270, 30]] },
+        { texto: "Camina 1 min hasta Key Institute", tipo: "caminar", puntos: [[270, 30], [310, 30]] }
+      ] }
+  ],
+  margenMin: 10,
+  avisoCierre: {
+    titulo: "Cierre en tu ruta",
+    hora: "6:30 a. m.",
+    texto: "[CALLE CERRADA] está cerrada esta mañana. Toca para ver una ruta alterna.",
+    calle: "[CALLE CERRADA]",
+    nuevaRuta: "40-A",
+    nuevaRutaTexto: "Nueva ruta: Ruta 40-A",
+    parada: "Tu nueva parada está a dos cuadras.",
+    salida: "Sal a las 6:40 a. m. para llegar a tiempo.",
+    mapa: {
+      habitual: [[30, 150], [150, 150], [150, 70], [310, 70]],
+      cerrado: [[150, 150], [150, 70]],
+      caminata: [[150, 150], [230, 150]],
+      desvio: [[230, 150], [230, 70], [310, 70]]
+    }
+  }
+};
+
+const DIAS = ["L", "M", "M", "J", "V", "S", "D"];
+const DIAS_NOMBRE = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+const $ = (s) => document.querySelector(s);
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const ruta = (id) => DATOS.rutas.find((r) => r.id === id);
+const linea = (id) => DATOS.lineas.find((l) => l.id === id);
+const AC = DATOS.avisoCierre;
+let estado, tToast, tBanner, animToken = 0;
+
+const ICONO_CIERRE = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14v7M18 14v7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><rect x="2" y="7.5" width="20" height="7" rx="1.5" fill="#fff"/><path d="M5 7.5h3.2L4.6 14.5H2zM11 7.5h3.2l-3.6 7H7.4zM17 7.5h3.2l-3.6 7h-3.2zM22 10v4.5h-2.3z" fill="#C0262D"/></svg>`;
+const ICONO_CAMINAR = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="4" r="1.8"/><path d="M10 21l2.2-6 2.8 2.6V21M7.5 11.5 10 8h3.5l2.2 3.2 2.3.8M12.2 15 13.5 8"/></svg>`;
+
+function inicial() {
+  return { tab: "buscar", buscado: false, abierta: null, elegida: null, guardado: false,
+    dias: [true, true, true, true, true, false, false], viaje: null, calculo: null, cierreAbierto: false };
+}
+
+/* ── Utilidades ─────────────────────────────────────────── */
+function resumen(r) {
+  const t = r.transbordos === 0 ? "sin transbordos" : r.transbordos + (r.transbordos === 1 ? " transbordo" : " transbordos");
+  return `${r.duracion} min · ${r.caminata} min caminando · ${t}`;
+}
+function textoDias(d) {
+  if (d.every((v, i) => v === (i < 5))) return "Lunes a viernes";
+  return d.map((v, i) => (v ? DIAS_NOMBRE[i] : null)).filter(Boolean).join(", ");
+}
+function hora12(min) {
+  min = ((min % 1440) + 1440) % 1440;
+  const h = Math.floor(min / 60), m = min % 60;
+  return `${h % 12 === 0 ? 12 : h % 12}:${String(m).padStart(2, "0")} ${h < 12 ? "a. m." : "p. m."}`;
+}
+const pts = (p) => p.map((q) => q.join(",")).join(" ");
+const dist = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+function largo(p) { let l = 0; for (let i = 1; i < p.length; i++) l += dist(p[i - 1], p[i]); return l; }
+function puntoEn(p, d) {
+  for (let i = 1; i < p.length; i++) {
+    const s = dist(p[i - 1], p[i]);
+    if (d <= s || i === p.length - 1) { const t = s ? Math.min(d / s, 1) : 0; return [p[i - 1][0] + (p[i][0] - p[i - 1][0]) * t, p[i - 1][1] + (p[i][1] - p[i - 1][1]) * t]; }
+    d -= s;
+  }
+  return p[p.length - 1];
+}
+function insignia(x, y, texto, color) {
+  const w = texto.length * 7 + 12;
+  return `<g transform="translate(${x} ${y})"><rect x="${-w / 2}" y="-9" width="${w}" height="18" rx="6" fill="${color}" stroke="#fff" stroke-width="2"/><text class="insignia-txt" text-anchor="middle" y="4">${esc(texto)}</text></g>`;
+}
+function pin(p, letra, color) {
+  return `<g transform="translate(${p[0]} ${p[1]})"><circle r="10" fill="${color}" stroke="#fff" stroke-width="3"/><text class="pin-txt" text-anchor="middle" y="4">${letra}</text></g>`;
+}
+function calles(todos) {
+  const xs = [30, 70, 110, 150, 190, 230, 270, 310], ys = [30, 70, 110, 150, 190]; /* cuadrícula fija de calles */
+  const v = xs.map((x) => `<line x1="${x}" y1="0" x2="${x}" y2="190"/>`).join("");
+  const h = ys.map((y) => `<line x1="0" y1="${y}" x2="340" y2="${y}"/>`).join("");
+  return `<g class="calle-borde">${v}${h}</g><g class="calle">${v}${h}</g>`;
+}
+
+/* ── Mapa de una ruta (con marcador para la animación) ─── */
+function mapaRuta(r, id) {
+  const todos = DATOS.rutas.flatMap((x) => x.pasos.flatMap((p) => p.puntos));
+  let tramos = "", insignias = "", paradas = "";
+  r.pasos.forEach((p, i) => {
+    if (p.tipo === "bus") {
+      const color = linea(p.lineas[0]).color;
+      tramos += `<polyline class="tramo-casing" stroke-width="11" points="${pts(p.puntos)}"/><polyline class="tramo bus" stroke="${color}" points="${pts(p.puntos)}"/>`;
+      const m = puntoEn(p.puntos, largo(p.puntos) / 2);
+      insignias += insignia(m[0], m[1], p.lineas.join(" / "), color);
+      paradas += [p.puntos[0], p.puntos[p.puntos.length - 1]].map((q) => `<circle cx="${q[0]}" cy="${q[1]}" r="5" fill="#fff" stroke="#0B1F3A" stroke-width="2.5"/>`).join("");
+    } else {
+      tramos += `<polyline class="tramo caminar" points="${pts(p.puntos)}"/>`;
+    }
+  });
+  const inicio = r.pasos[0].puntos[0], fin = r.pasos[r.pasos.length - 1].puntos.slice(-1)[0];
+  return `<svg class="mapa" id="${id}" viewBox="0 0 340 190" role="img" aria-label="Mapa de la ruta ${esc(r.nombre)}">
+    ${calles(todos)}${tramos}${paradas}${insignias}${pin(inicio, "A", "#1F7A8C")}${pin(fin, "B", "#C0262D")}
+    <g class="marcador" transform="translate(${inicio[0]} ${inicio[1]})" style="display:none"><circle r="11" fill="#F2B705" stroke="#0B1F3A" stroke-width="3"/><rect x="-4.5" y="-5" width="9" height="9" rx="2" fill="#0B1F3A"/></g>
+  </svg>`;
+}
+
+/* Mini animación del viaje: el marcador recorre la ruta y resalta cada paso. */
+function animarViaje(r, svgId, listaId) {
+  const token = ++animToken;
+  const svg = document.getElementById(svgId), lista = document.getElementById(listaId);
+  if (!svg || !lista) return;
+  const m = svg.querySelector(".marcador"), items = lista.querySelectorAll("li");
+  const largos = r.pasos.map((p) => largo(p.puntos)), total = largos.reduce((a, b) => a + b, 0);
+  const reducir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const dur = 5200;
+  let inicio = null;
+  m.style.display = "";
+  function cuadro(t) {
+    if (token !== animToken) return;
+    if (inicio === null) inicio = t;
+    const k = reducir ? 1 : Math.min((t - inicio) / dur, 1);
+    let d = k * total, i = 0;
+    while (i < largos.length - 1 && d > largos[i]) { d -= largos[i]; i++; }
+    const q = puntoEn(r.pasos[i].puntos, d);
+    m.setAttribute("transform", `translate(${q[0]} ${q[1]})`);
+    items.forEach((li, j) => li.classList.toggle("activo", j === i && k < 1));
+    if (k < 1) requestAnimationFrame(cuadro);
+  }
+  requestAnimationFrame(cuadro);
+}
+
+/* ── Mapa del aviso de cierre ──────────────────────────── */
+function mapaCierre() {
+  const M = AC.mapa, color = linea(AC.nuevaRuta).color;
+  const todos = [...M.habitual, ...M.caminata, ...M.desvio];
+  const c = puntoEn(M.cerrado, largo(M.cerrado) / 2);
+  const mc = puntoEn(M.caminata, largo(M.caminata) / 2);
+  const md = puntoEn(M.desvio, largo(M.desvio) / 2);
+  return `<svg class="mapa" viewBox="0 0 340 190" role="img" aria-label="Mapa: calle cerrada y nueva ruta ${esc(AC.nuevaRuta)}">
+    ${calles(todos)}
+    <polyline class="tramo-casing" stroke-width="10" points="${pts(M.habitual)}"/>
+    <polyline class="tramo bus" stroke="#B9C2CC" stroke-width="6" points="${pts(M.habitual)}"/>
+    <polyline class="tramo" stroke="#C0262D" stroke-width="6" stroke-dasharray="8 7" points="${pts(M.cerrado)}"/>
+    <polyline class="tramo caminar" points="${pts(M.caminata)}"/>
+    <polyline class="tramo-casing" stroke-width="11" points="${pts(M.desvio)}"/>
+    <polyline class="tramo bus" stroke="${color}" points="${pts(M.desvio)}"/>
+    ${insignia(md[0] + 26, md[1], AC.nuevaRuta, color)}
+    <text class="mapa-txt" text-anchor="middle" x="${mc[0]}" y="${mc[1] - 10}">2 cuadras</text>
+    <circle cx="${M.desvio[0][0]}" cy="${M.desvio[0][1]}" r="5.5" fill="#fff" stroke="#0B1F3A" stroke-width="2.5"/>
+    <g transform="translate(${c[0]} ${c[1]})"><circle r="16" fill="#C0262D" stroke="#fff" stroke-width="3"/><g transform="translate(-11 -11) scale(.92)">${ICONO_CIERRE.replace('<svg viewBox="0 0 24 24" aria-hidden="true">', "").replace("</svg>", "")}</g></g>
+    <g transform="translate(${c[0] - 34} ${c[1] - 2})"><path d="M0 -12 L11 8 H-11 Z" fill="#F2B705" stroke="#0B1F3A" stroke-width="1.5" stroke-linejoin="round"/><text text-anchor="middle" y="5" font-size="13" font-weight="900" fill="#0B1F3A">!</text></g>
+    <text class="mapa-txt rojo" text-anchor="end" x="${c[0] - 50}" y="${c[1] + 4}">${esc(AC.calle)}</text>
+    ${pin(M.habitual[0], "A", "#1F7A8C")}${pin(M.habitual[M.habitual.length - 1], "B", "#C0262D")}
+  </svg>`;
+}
+
+function cabeceraCierre(desplegable) {
+  return `<span class="notif-icono">${ICONO_CIERRE}<span class="excl">!</span></span>
+    <span class="notif-cuerpo"><span class="notif-arriba"><strong>${esc(AC.titulo)}</strong><span>${esc(AC.hora)}</span></span><span class="notif-texto">${esc(AC.texto)}</span></span>
+    ${desplegable ? `<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>` : ""}`;
+}
+
+/* ── Pintar ─────────────────────────────────────────────── */
+function pintarViajes() {
+  const v = estado.viaje;
+  $("#tus-viajes").innerHTML = v
+    ? `<div class="viajes"><h2>Tus viajes</h2><div class="viaje"><div><strong>${esc(v.desde)} → ${esc(v.hasta)}</strong><span>${textoDias(v.dias)}</span><span>${esc(ruta(v.ruta).nombre)}</span></div><button class="quitar" data-accion="quitar" aria-label="Quitar viaje">✕</button></div></div>`
+    : "";
+}
+
+function pintarResultados() {
+  $("#btn-buscar").className = estado.buscado ? "btn sec" : "btn";
+  animToken++;
+  let html = "";
+  if (estado.buscado) {
+    const lista = estado.elegida ? [ruta(estado.elegida)] : DATOS.rutas;
+    html = lista.map((r) => {
+      const abierta = estado.elegida ? true : estado.abierta === r.id;
+      const pasos = `<ol class="pasos" id="pasos-${r.id}">${r.pasos.map((p) => `<li>${esc(p.texto)}</li>`).join("")}</ol>`;
+      const boton = estado.elegida ? "" : `<button class="btn" data-accion="elegir" data-id="${r.id}">Elegir esta ruta</button>`;
+      return `<div class="tarjeta${abierta ? " abierta" : ""}">
+        <button class="tarjeta-cab" data-accion="tarjeta" data-id="${r.id}" aria-expanded="${abierta}"${estado.elegida ? " disabled" : ""}><strong>${esc(r.nombre)}</strong><span>${resumen(r)}</span></button>
+        ${abierta ? `<div class="detalle">${mapaRuta(r, "mapa-" + r.id)}${pasos}${boton}</div>` : ""}
+      </div>`;
+    }).join("");
+  }
+  $("#resultados").innerHTML = html;
+  if (estado.elegida) animarViaje(ruta(estado.elegida), "mapa-" + estado.elegida, "pasos-" + estado.elegida);
+}
+
+function pintarGuardar() {
+  $("#guardar").innerHTML = estado.elegida && !estado.guardado
+    ? `<div class="caja"><h2>Guardar viaje</h2>
+        <div class="dias">${DIAS.map((d, i) => `<button class="dia${estado.dias[i] ? " on" : ""}" data-accion="dia" data-i="${i}" aria-pressed="${estado.dias[i]}">${d}</button>`).join("")}</div>
+        <p class="nota">Tú decides qué se guarda. Puedes borrarlo cuando quieras.</p>
+        <button class="btn" data-accion="guardar">Guardar</button></div>`
+    : "";
+}
+
+function pintarCalcular() {
+  const c = estado.calculo;
+  $("#calculo").innerHTML = c
+    ? `<div class="resultado">Sal a las ${c.salida}</div>
+       <ul class="lineas">${ruta(c.ruta).pasos.map((p) => `<li>${esc(p.texto)}</li>`).join("")}</ul>
+       <p class="nota">Estimación según la duración habitual del viaje y los incidentes conocidos. No es una garantía.</p>`
+    : "";
+}
+
+function pintarRutas() {
+  $("#lista-rutas").innerHTML = DATOS.lineas.map((l) => {
+    const usos = DATOS.rutas.filter((r) => r.pasos.some((p) => (p.lineas || []).includes(l.id))).map((r) => r.nombre);
+    const vars = l.variantes.length ? `<span class="chips">${l.variantes.map((v) => `<span class="chip">${esc(l.id)} ${esc(v)}</span>`).join("")}</span>` : "";
+    return `<div class="linea"><span class="linea-num" style="background:${l.color}">${esc(l.id)}</span><div><strong>${esc(l.nombre)}</strong>${usos.length ? `<span>${esc(usos.join(" · "))}</span>` : ""}${vars}</div></div>`;
+  }).join("");
+}
+
+function pintarAvisos() {
+  const color = linea(AC.nuevaRuta).color;
+  $("#lista-avisos").innerHTML = `<div class="notif cierre">
+    <button class="notif-cab" data-accion="toggle-cierre" aria-expanded="${estado.cierreAbierto}">${cabeceraCierre(true)}</button>
+    <div class="notif-detalle"${estado.cierreAbierto ? "" : " hidden"}>
+      ${mapaCierre()}
+      <p class="fila"><span class="linea-num" style="background:${color}">${esc(AC.nuevaRuta)}</span>${esc(AC.nuevaRutaTexto)}</p>
+      <p class="fila"><span class="fila-icono">${ICONO_CAMINAR}</span>${esc(AC.parada)}</p>
+      <p class="salida">${esc(AC.salida)}</p>
+    </div>
+  </div>`;
+}
+
+function pintarTabs() {
+  for (const t of ["buscar", "calcular", "rutas", "avisos"]) {
+    $("#panel-" + t).hidden = estado.tab !== t;
+    document.querySelector(`[data-tab="${t}"]`).setAttribute("aria-current", estado.tab === t ? "page" : "false");
+  }
+}
+
+function pintarTodo() { pintarTabs(); pintarViajes(); pintarResultados(); pintarGuardar(); pintarCalcular(); pintarRutas(); pintarAvisos(); }
+
+/* ── Acciones ───────────────────────────────────────────── */
+function irA(tab) {
+  if (estado.tab === tab) return;
+  estado.tab = tab;
+  pintarTabs();
+  $("#main").scrollTop = 0;
+}
+function mostrarToast() {
+  const t = $("#toast");
+  t.classList.add("show");
+  clearTimeout(tToast);
+  tToast = setTimeout(() => t.classList.remove("show"), 2000);
+}
+function mostrarBanner() {
+  const b = $("#banner");
+  b.classList.remove("show");
+  void b.offsetWidth;
+  b.classList.add("show");
+  clearTimeout(tBanner);
+  tBanner = setTimeout(() => b.classList.remove("show"), 6000);
+}
+function ocultarBanner() { clearTimeout(tBanner); $("#banner").classList.remove("show"); }
+function limpiarBusqueda() {
+  if (!estado.buscado) return;
+  estado.buscado = false; estado.abierta = null; estado.elegida = null; estado.guardado = false;
+  pintarResultados(); pintarGuardar();
+}
+
+const acciones = {
+  buscar() {
+    if (!$("#b-desde").value.trim() || !$("#b-hasta").value.trim()) return;
+    estado.buscado = true; estado.abierta = null; estado.elegida = null; estado.guardado = false;
+    pintarResultados(); pintarGuardar();
+  },
+  tarjeta(el) {
+    estado.abierta = estado.abierta === el.dataset.id ? null : el.dataset.id;
+    pintarResultados();
+  },
+  elegir(el) {
+    estado.elegida = el.dataset.id; estado.guardado = false;
+    pintarResultados(); pintarGuardar();
+    $("#resultados").scrollIntoView({ behavior: "smooth", block: "start" });
+  },
+  dia(el) {
+    const i = Number(el.dataset.i);
+    estado.dias[i] = !estado.dias[i];
+    pintarGuardar();
+  },
+  guardar() {
+    if (!estado.dias.some(Boolean)) return;
+    estado.viaje = { desde: $("#b-desde").value.trim(), hasta: $("#b-hasta").value.trim(), ruta: estado.elegida, dias: estado.dias.slice() };
+    estado.guardado = true;
+    pintarViajes(); pintarGuardar();
+    mostrarToast();
+    $("#main").scrollTo({ top: 0, behavior: "smooth" });
+  },
+  quitar() { estado.viaje = null; pintarViajes(); },
+  calcular() {
+    const valor = $("#c-hora").value;
+    if (!valor) return;
+    const [h, m] = valor.split(":").map(Number);
+    const r = ruta(estado.viaje ? estado.viaje.ruta : "B");
+    estado.calculo = { salida: hora12(h * 60 + m - (r.duracion + DATOS.margenMin)), ruta: r.id };
+    pintarCalcular();
+  },
+  "toggle-cierre"() { estado.cierreAbierto = !estado.cierreAbierto; pintarAvisos(); },
+  "abrir-cierre"() {
+    ocultarBanner();
+    estado.cierreAbierto = true;
+    pintarAvisos();
+    irA("avisos");
+    $("#main").scrollTop = 0;
+  },
+  ejemplo() { mostrarBanner(); }
+};
+
+function reiniciar() {
+  estado = inicial();
+  clearTimeout(tToast);
+  $("#toast").classList.remove("show");
+  ocultarBanner();
+  $("#b-desde").value = DATOS.origen;
+  $("#b-hasta").value = DATOS.destino;
+  $("#c-desde").value = DATOS.origen;
+  $("#c-hasta").value = DATOS.destino;
+  $("#c-hora").value = "";
+  if (document.activeElement) document.activeElement.blur();
+  pintarTodo();
+  $("#main").scrollTop = 0;
+}
+
+/* ── Eventos ────────────────────────────────────────────── */
+$("#banner").innerHTML = `<div class="notif-cab">${cabeceraCierre(false)}</div>`;
+
+$("#phone").addEventListener("click", (e) => {
+  const tab = e.target.closest("[data-tab]");
+  if (tab) { irA(tab.dataset.tab); return; }
+  const el = e.target.closest("[data-accion]");
+  if (el && acciones[el.dataset.accion]) acciones[el.dataset.accion](el);
+});
+$("#b-desde").addEventListener("input", limpiarBusqueda);
+$("#b-hasta").addEventListener("input", limpiarBusqueda);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "r" && e.key !== "R") return;
+  if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
+  const t = e.target;
+  if (t && t.tagName === "INPUT" && t.type === "text") return;
+  e.preventDefault();
+  reiniciar();
+});
+
+function ajustar() {
+  const s = Math.min((window.innerHeight - 48) / 804, (window.innerWidth - 48) / 414);
+  $("#phone").style.transform = `scale(${Math.max(s, 0.3)})`;
+}
+window.addEventListener("resize", ajustar);
+
+ajustar();
+reiniciar();
+</script>
+</body>
+</html>
